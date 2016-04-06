@@ -73,10 +73,10 @@ class Loader
      */
     public static function loadDir($configsDir)
     {
-        if (!is_dir($configsDir)) {
-            throw new Exception('Config directory not found');
-        }
         $config = new Config();
+        if (!is_dir($configsDir)) {
+            return $config;
+        }
         $fileSystem = new \FilesystemIterator($configsDir, \FilesystemIterator::SKIP_DOTS);
         /* @var \SplFileInfo $configFile*/
         foreach ($fileSystem as $configFile) {

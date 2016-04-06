@@ -1,6 +1,7 @@
 {
     "require": {
         "overtrue/wechat": "~3.0",
-        "phalcon/incubator": "^2.0"
+        "phalcon/incubator": "^2.0",
+        "fabfuel/prophiler": "~1.0"
     }
 }

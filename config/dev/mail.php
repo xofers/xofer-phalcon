@@ -13,23 +13,24 @@ return [
 
     'mail'=>[
 
+        'driver'        =>  'smtp',
+
         'host'          =>  'smtp.exmail.qq.com',
+
+        'port'          =>  465,
+
+        'encryption'    =>  'ssl',
 
         'userName'      =>  'dev@duocai.cn',
 
         'passWord'      =>  'Duocai2015',
 
-        'smtpSecure'    =>  'ssl',
+        'from'          =>  [
 
-        'port'          =>  465,
+            'email'     =>      'dev@duocai.cn',
 
-        'charSet'       =>  'utf-8',
+            'name'      =>      APP_NAME . ' - 技术研发中心'
 
-        'from'          =>  'dev@duocai.cn',
-
-        'fromName'      =>  APP_NAME . ' - 技术研发中心',
-
-        'language'      =>  'zh-cn'
-
+        ]
     ]
 ];

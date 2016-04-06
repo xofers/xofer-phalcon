@@ -20,12 +20,14 @@ class Module implements ModuleDefinitionInterface
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(array(
+        $loader->registerNamespaces([
             'Dc\Wechat\Controllers' => __DIR__ . '/controllers/',
-            'Dc\Wechat\Models' => __DIR__ . '/models/',
-        ));
+            'Dc\Lib' => __DIR__ . '/../../library/',
+        ]);
 
-        $loader->registerDirs(array(__DIR__ . '/models/'), true);
+        $loader->registerDirs([
+            __DIR__ . '/models/'
+        ], true);
 
         $loader->register();
     }
@@ -37,6 +39,8 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerServices(DiInterface $di)
     {
+
+
         $di->set('view',function(){
 
             $view = new View();

@@ -7,8 +7,9 @@ use Phalcon\Mvc\View,
     Phalcon\config\Loader,
     Phalcon\Mvc\Dispatcher,
     Phalcon\DI\FactoryDefault,
-    Phalcon\Session\Adapter\Libmemcached as Session,
-    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+    Phalcon\Events\Manager as EventsManager,
+    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
+    Phalcon\Session\Adapter\Libmemcached as Session;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -64,9 +65,18 @@ $di->set('router',function(){
 /**
  * Registering a dispatcher
  */
-$di->set('dispatcher',function () {
+$di->set('dispatcher',function () use ($config) {
 
-    $dispatcher = new Dispatcher();
+    $dispatcher     = new Dispatcher();
+    $eventsManager  = new EventsManager();
+
+    //加载各模块下对应的配置文件
+    $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
+        $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.$dispatcher->getModuleName().'/config/');
+        $config->merge($moduleConfig);
+    });
+
+    $dispatcher->setEventsManager($eventsManager);
     $dispatcher->setDefaultNamespace("Dc\Welcome\Controllers");
 
     return $dispatcher;

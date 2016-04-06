@@ -7,9 +7,10 @@
  * @datetime    :2016-3-29
  */
 
-namespace Dc\Library;
+namespace Dc\Lib;
 
 use Phalcon\Di;
+use Phalcon\Mailer\Manager;
 
 class Sms {
 
@@ -152,20 +153,8 @@ class Sms {
         return file_get_contents(self::$_Surplus.'?OperID='.self::$_OperID.'&OperPass='.self::$_OperPass);
     }
 
-    public static function sendMail($subject = '', $body = '', $emails = array(), $attachment = '') {
-        $mail =new \PHPMailer();
-        $mail->isSMTP();
-        $mail->isHTML(true);
-        $mail->SMTPSecure = "ssl";
-
-        $mail->Host = 'smtp.exmail.qq.com';
-        $mail->Username = 'dev@duocai.cn';
-        $mail->Password = 'Duocai2015';
-        $mail->CharSet = 'utf-8';
-        $mail->From = 'dev@duocai.cn';
-        $mail->FromName = APP_NAME . " - 技术研发中心";
-        $mail->setLanguage("zh-cn");
-
-
+    public static function sendMail() {
+        $config = Di::getDefault()->getShared('config');
+        new Manager($config->mail->toArray());
     }
 }
