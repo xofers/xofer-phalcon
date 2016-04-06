@@ -18,9 +18,8 @@ $di = new FactoryDefault();
  */
 $di->set('config',function(){
 
-    $loader = new Loader();
     $dir    = APP_DEBUG ? 'dev/' : 'online/';
-    $config = $loader->loadDir(APP_PATH.'/config/'. $dir);
+    $config = Loader::loadDir(APP_PATH.'/config/'. $dir);
 
     return $config;
 });
@@ -30,8 +29,27 @@ $di->set('config',function(){
  */
 $di->set('router',function(){
 
-    $router = new Router();
+    $router = new Router(false);
     $router->setDefaultModule("welcome");
+
+    //设置模块的默认路由
+    $module = array_flip(array_keys(Loader::load(APP_PATH.'/config/modules.php')->toArray()));
+    array_walk($module,function($val,$key,$router){
+        $router->add('/'.$key,['controller'=> 'index','action' => 'index', 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
+        $router->add('/'.$key.'/:controller',['controller'=> 1,'action' => 'index','module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
+        $router->add('/'.$key.'/:controller/:action',['controller'=> 1,'action' => 2, 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
+    },$router);
+
+    //设置自定义路由
+    $myRouters = Loader::load(APP_PATH.'/config/routers.php')->toArray();
+    if(!empty($myRouters)){
+        array_walk($myRouters,function($val,$key,$router){
+            $router->add($key,$val);
+        },$router);
+    }
+
+    //处理结尾额外的斜杆
+    $router->removeExtraSlashes(true);
 
     return $router;
 });

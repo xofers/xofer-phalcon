@@ -9,14 +9,13 @@
 
 namespace Dc\Welcome\Controllers;
 
-use Phalcon\Di;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller {
 
     public function indexAction() {
-        print_r(Di::getDefault()->get('config'));
-
+//        print_r($this->di->get("config"));
+        echo "aaa";
         die();
     }
 }

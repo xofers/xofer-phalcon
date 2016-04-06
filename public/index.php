@@ -17,8 +17,7 @@ try {
     $application = new Application($di);
 
     //注册模块
-    $modules = require_once '../config/modules.php';
-    $application->registerModules($modules->toArray());
+    $application->registerModules(\Phalcon\Config\Loader::load(APP_PATH.'/config/modules.php')->toArray());
 
     //处理请求
     echo $application->handle()->getContent();

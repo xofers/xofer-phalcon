@@ -13,12 +13,8 @@ use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller {
 
-    public function OnConstruct() {
-
-    }
-
     public function indexAction() {
-
+        echo "aaxxx";
     }
     
 }

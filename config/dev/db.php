@@ -10,6 +10,7 @@
  */
 
 return  [
+
     'db_w'    =>  [
 
         'adapter'   => 'Mysql',
@@ -25,6 +26,7 @@ return  [
         'charset'   => 'utf8'
 
     ],
+
     'db_r'  =>  [
 
         'adapter'   => 'Mysql',

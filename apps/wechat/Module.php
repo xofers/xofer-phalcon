@@ -27,10 +27,6 @@ class Module implements ModuleDefinitionInterface
             'Dc\Wechat\Models' => __DIR__ . '/models/',
         ));
 
-        $loader->registerClasses(array(
-            "verdor/autoload.php"
-        ));
-
         $loader->register();
     }
 
@@ -47,7 +43,6 @@ class Module implements ModuleDefinitionInterface
             "module" => "wechat",
             "controllers" => "index"
         ]);
-
 
         //定义视图
         $di->set('view', function() {
