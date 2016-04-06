@@ -1,0 +1,7 @@
+{
+    "require": {
+        "overtrue/wechat": "~3.0",
+        "phpmailer/phpmailer": "~5.2",
+        "phalcon/incubator": "^2.0"
+    }
+}
