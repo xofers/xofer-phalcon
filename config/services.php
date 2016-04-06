@@ -19,7 +19,7 @@ $di = new FactoryDefault();
 $di->set('config',function(){
 
     $loader = new Loader();
-    $dir    = IS_DEV ? 'dev/' : 'online/';
+    $dir    = APP_DEBUG ? 'dev/' : 'online/';
     $config = $loader->loadDir(APP_PATH.'/config/'. $dir);
 
     return $config;
