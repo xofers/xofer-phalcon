@@ -2,13 +2,11 @@
 
 namespace Dc\Wechat;
 
-use Phalcon\Mvc\Router;
-use Phalcon\DiInterface;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Mvc\Router;
+use Phalcon\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-use Phalcon\Mvc\Dispatcher;
 
 class Module implements ModuleDefinitionInterface
 {
@@ -27,6 +25,8 @@ class Module implements ModuleDefinitionInterface
             'Dc\Wechat\Models' => __DIR__ . '/models/',
         ));
 
+        $loader->registerDirs(array(__DIR__ . '/models/'), true);
+
         $loader->register();
     }
 
@@ -37,17 +37,11 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerServices(DiInterface $di)
     {
+        $di->set('view',function(){
 
-        //微信用户分组
-        $wechatGroup = new Router\Group([
-            "module" => "wechat",
-            "controllers" => "index"
-        ]);
-
-        //定义视图
-        $di->set('view', function() {
             $view = new View();
             $view->setViewsDir(__DIR__ . '/views/');
+
             return $view;
         });
     }

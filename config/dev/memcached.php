@@ -11,12 +11,13 @@
 
 return [
 
-    'memcached' =>[
+    'memcached' =>  [
+        [
+            'host'      => '127.0.0.1',
 
-        'host'      => '127.0.0.1',
+            'port'      => '11211',
 
-        'port'      => '11211',
-
-        'weight'    => 1,
+            'weight'    => 1,
+        ]
     ]
 ];

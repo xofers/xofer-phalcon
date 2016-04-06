@@ -21,7 +21,7 @@ return  [
 
         'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
-        'dbname'    => 'duocaiTH',
+        'dbname'    => 'duocaiwx',
 
         'charset'   => 'utf8'
 
@@ -37,7 +37,7 @@ return  [
 
         'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
-        'dbname'    => 'duocaiTH',
+        'dbname'    => 'duocaiwx',
 
         'charset'   => 'utf8'
 

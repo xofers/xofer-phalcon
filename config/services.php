@@ -6,7 +6,9 @@ use Phalcon\Mvc\View,
     Phalcon\Mvc\Router,
     Phalcon\config\Loader,
     Phalcon\Mvc\Dispatcher,
-    Phalcon\DI\FactoryDefault;
+    Phalcon\DI\FactoryDefault,
+    Phalcon\Session\Adapter\Libmemcached as Session,
+    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -16,13 +18,18 @@ $di = new FactoryDefault();
 /**
  * Registering a config
  */
-$di->set('config',function(){
+$di->setShared('config',function(){
 
     $dir    = APP_DEBUG ? 'dev/' : 'online/';
     $config = Loader::loadDir(APP_PATH.'/config/'. $dir);
 
     return $config;
 });
+
+/**
+ * get all config
+ */
+$config = $di->getShared('config');
 
 /**
  * Registering a router
@@ -68,8 +75,64 @@ $di->set('dispatcher',function () {
 /**
  * Registering a view
  */
-$di['view'] = function() {
+$di->set('view',function () {
 
     $view = new View();
     return $view;
-};
+});
+
+/**
+ * Registering a mysql write connnect
+ */
+$di->setShared('dbWrite', function() use ($config) {
+    return new DbAdapter($config->db_w->toArray());
+});
+
+/**
+ * Registering a mysql read connnect
+ */
+$di->setShared('dbRead', function() use ($config) {
+    return new DbAdapter($config->db_r->toArray());
+});
+
+/**
+ * Registering a session
+ */
+$di->set('session', function() use ($config) {
+
+    $session = new Session(array(
+        'servers' => $config->memcached->toArray(),
+        'client' => array(
+            \Memcached::OPT_HASH => \Memcached::HASH_MD5,
+            \Memcached::OPT_PREFIX_KEY => '_DCWX',
+        ),
+        'lifetime' => 86400,
+        'prefix' => '_SESSION_', //实际整体前缀是：_DCWX_SESSION_
+    ));
+
+    $session->start();
+
+    return $session;
+});
+
+/**
+ * Registering a model cache
+ */
+$di->set('modelsCache', function () use ($config) {
+
+    $frontCache = new \Phalcon\Cache\Frontend\Data(array(
+        'lifetime' => 86400,
+    ));
+
+    $cache = new \Phalcon\Cache\Backend\Libmemcached($frontCache, array(
+        'servers' => $config->memcached->toArray(),
+        'client' => array(
+            \Memcached::OPT_HASH => \Memcached::HASH_MD5,
+            \Memcached::OPT_PREFIX_KEY => '_DCWX',
+        ),
+        'prefix' => '_MODEL_CACHE_',
+    ));
+
+    return $cache;
+});
+
