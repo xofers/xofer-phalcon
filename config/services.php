@@ -100,15 +100,15 @@ $di->setShared('dbRead', function() use ($config) {
  */
 $di->set('session', function() use ($config) {
 
-    $session = new Session(array(
+    $session = new Session([
         'servers' => $config->memcached->toArray(),
-        'client' => array(
+        'client' => [
             \Memcached::OPT_HASH => \Memcached::HASH_MD5,
             \Memcached::OPT_PREFIX_KEY => '_DCWX',
-        ),
+        ],
         'lifetime' => 86400,
         'prefix' => '_SESSION_', //实际整体前缀是：_DCWX_SESSION_
-    ));
+    ]);
 
     $session->start();
 
@@ -120,19 +120,18 @@ $di->set('session', function() use ($config) {
  */
 $di->set('modelsCache', function () use ($config) {
 
-    $frontCache = new \Phalcon\Cache\Frontend\Data(array(
+    $frontCache = new \Phalcon\Cache\Frontend\Data([
         'lifetime' => 86400,
-    ));
+    ]);
 
-    $cache = new \Phalcon\Cache\Backend\Libmemcached($frontCache, array(
+    $cache = new \Phalcon\Cache\Backend\Libmemcached($frontCache, [
         'servers' => $config->memcached->toArray(),
-        'client' => array(
+        'client' => [
             \Memcached::OPT_HASH => \Memcached::HASH_MD5,
             \Memcached::OPT_PREFIX_KEY => '_DCWX',
-        ),
-        'prefix' => '_MODEL_CACHE_',
-    ));
+        ],
+        'prefix' => '_MODEL_CACHE_'
+    ]);
 
     return $cache;
 });
-
