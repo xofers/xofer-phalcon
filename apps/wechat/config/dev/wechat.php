@@ -47,7 +47,7 @@ return  [
          * callback：OAuth授权完成后的回调页地址
          */
         'oauth' => [
-            'callback' => 'http://rd.wx.duocai.cn/wechat',
+            'callback' => 'http://rd.wx.duocai.cn/wechat/server',
         ],
 
         /**
