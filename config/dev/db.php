@@ -15,9 +15,9 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => '127.0.0.1',
+        'host'      => 's.mysql.pool.duocai.cn',
 
-        'username'  => 'duocai_dev',
+        'username'  => 'root',
 
         'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
@@ -33,9 +33,9 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => '127.0.0.1',
+        'host'      => 's.mysql.pool.duocai.cn',
 
-        'username'  => 'duocai_dev',
+        'username'  => 'root',
 
         'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
