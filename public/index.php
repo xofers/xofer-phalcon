@@ -9,10 +9,10 @@ define("IS_DEV",isset($_SERVER['DC_ENV']) && in_array($_SERVER['DC_ENV'], ['dev'
 
 try {
     //引入包资源
-    require_once '../vendor/autoload.php';
+    require_once APP_PATH.'/vendor/autoload.php';
 
     //加载服务
-    require_once '../config/services.php';
+    require_once APP_PATH.'/config/services.php';
 
     //创建应用
     $application = new Application($di);
