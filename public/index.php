@@ -11,6 +11,9 @@ try {
     //引入包资源
     require_once APP_PATH.'/vendor/autoload.php';
 
+    print_r($_SERVER);
+    die();
+
     //加载服务
     require_once APP_PATH.'/config/services.php';
 
