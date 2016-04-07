@@ -11,6 +11,8 @@ try {
     //引入包资源
     require_once APP_PATH.'/vendor/autoload.php';
 
+    echo (new \Phalcon\Version())->get();
+
     //加载服务
     require_once APP_PATH.'/config/services.php';
 
