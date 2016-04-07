@@ -15,11 +15,11 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => 's.mysql.pool.duocai.cn',
+        'host'      => '122.144.133.170',
 
-        'username'  => 'root',
+        'username'  => 'duocai_dev',
 
-        'password'  => '!@#QWE',
+        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
         'dbname'    => 'duocaiwx',
 
@@ -33,11 +33,11 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => 's.mysql.pool.duocai.cn',
+        'host'      => '122.144.133.170',
 
-        'username'  => 'root',
+        'username'  => 'duocai_dev',
 
-        'password'  => '!@#QWE',
+        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
         'dbname'    => 'duocaiwx',
 
