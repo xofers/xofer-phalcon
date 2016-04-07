@@ -19,7 +19,7 @@ return  [
 
         'username'  => 'root',
 
-        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
+        'password'  => '!@#QWE',
 
         'dbname'    => 'duocaiwx',
 
@@ -37,7 +37,7 @@ return  [
 
         'username'  => 'root',
 
-        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
+        'password'  => '!@#QWE',
 
         'dbname'    => 'duocaiwx',
 
