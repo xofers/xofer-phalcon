@@ -74,6 +74,10 @@ $di->set('dispatcher',function () use ($config) {
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
         $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.$dispatcher->getModuleName().'/config/');
         $config->merge($moduleConfig);
+        if(IS_DEV){
+            $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.$dispatcher->getModuleName().'/config/dev/');
+            $config->merge($moduleConfig);
+        }
     });
 
     $dispatcher->setEventsManager($eventsManager);

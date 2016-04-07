@@ -10,10 +10,20 @@
 namespace Dc\Wechat\Controllers;
 
 use Phalcon\Mvc\Controller;
+use EasyWeChat\Foundation\Application;
 
 class IndexController extends Controller {
 
     public function indexAction() {
-        echo 'dwa';
+        
+        $wxApp = new Application($this->di->get('config')->toArray());
+        // 从项目实例中得到服务端应用实例。
+        $server = $wxApp->server;
+
+        $server->setMessageHandler(function ($message) {
+            return "您好！欢迎关注我!当前事件为".$message->MsgType;
+        });
+
+        $server->serve()->send();
     }
 }

@@ -69,7 +69,6 @@ class Loader
      *
      * @param string $configsDir
      * @return Config
-     * @throws Exception
      */
     public static function loadDir($configsDir)
     {
