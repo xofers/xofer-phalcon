@@ -23,6 +23,8 @@ return  [
 
         'dbname'    => 'duocaiwx',
 
+        'port'      => '3306',
+
         'charset'   => 'utf8'
 
     ],
@@ -38,6 +40,8 @@ return  [
         'password'  => 'duocaiOIusg8712T82iHSNha7t1',
 
         'dbname'    => 'duocaiwx',
+
+        'port'      => '3306',
 
         'charset'   => 'utf8'
 
