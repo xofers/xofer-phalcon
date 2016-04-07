@@ -4,7 +4,7 @@
  */
 use Phalcon\Mvc\View,
     Phalcon\Mvc\Router,
-    Phalcon\config\Loader,
+    Phalcon\Config\Loader,
     Phalcon\Mvc\Dispatcher,
     Phalcon\DI\FactoryDefault,
     Phalcon\Events\Manager as EventsManager,

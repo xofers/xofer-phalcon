@@ -11,12 +11,6 @@ try {
     //引入包资源
     require_once APP_PATH.'/vendor/autoload.php';
 
-    $loader = new Phalcon\Loader();
-    $loader->registerNamespaces([
-        'Phalcon' => APP_PATH.'/vendor/phalcon/incubator/Library/Phalcon/'
-    ]);
-    $loader->register();
-
     //加载服务
     require_once APP_PATH.'/config/services.php';
 
