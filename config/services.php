@@ -21,7 +21,7 @@ $di = new FactoryDefault();
  */
 $di->setShared('config',function(){
 
-    $dir    = APP_DEBUG ? 'dev/' : 'online/';
+    $dir    = IS_DEV ? 'dev/' : 'online/';
     $config = Loader::loadDir(APP_PATH.'/config/'. $dir);
 
     return $config;

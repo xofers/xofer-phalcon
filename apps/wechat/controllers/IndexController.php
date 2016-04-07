@@ -9,15 +9,12 @@
 
 namespace Dc\Wechat\Controllers;
 
-use Dc\Lib\Sms;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller {
 
     public function indexAction() {
-        Sms::sendMail();
-        print_r($this->di->get('config'));
-        die();
+        $this->di->get('config');
+        echo 'dwa';
     }
-    
 }
