@@ -23,10 +23,10 @@ return  [
         /**
          * 账号基本信息，请从微信公众平台/开放平台获取
          */
-        'app_id'  => 'wxb66b650240f8dff2',                      // AppID
-        'secret'  => 'd4624c36b6795d1d99dcf0547af5443d',        // AppSecret
-        'token'   => '7mjioFsM1q',                              // Token
-        'aes_key' => '',                                        // EncodingAESKey
+        'app_id'  => 'wxb66b650240f8dff2',                          // AppID
+        'secret'  => 'd4624c36b6795d1d99dcf0547af5443d',            // AppSecret
+        'token'   => '7mjioFsM1q',                                  // Token
+        'aes_key' => 'I5RhzYaHLQDgZpzNaQTR1Wu9vSP4eGjlbFZp9hCdqYC', // EncodingAESKey
 
         /**
          * 日志配置
@@ -47,18 +47,17 @@ return  [
          * callback：OAuth授权完成后的回调页地址
          */
         'oauth' => [
-            'scopes'   => ['snsapi_userinfo'],
-            'callback' => '/examples/oauth_callback.php',
+            'callback' => 'http://rd.wx.duocai.cn/wechat',
         ],
 
         /**
          * 微信支付
          */
         'payment' => [
-            'merchant_id'        => 'your-mch-id',
-            'key'                => 'key-for-signature',
-            'cert_path'          => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
-            'key_path'           => 'path/to/your/key',      // XXX: 绝对路径！！！！
+            'merchant_id'        => '1226449602',
+            'key'                => 'EgTHxJhoJHPLrpkWrttZPWTnhaulIDze',
+            'cert_path'          => APP_PATH.'/library/pem/cert.pem',
+            'key_path'           => APP_PATH.'/library/pem/key.pem',
             // 'device_info'     => '013467007045764',
             // 'sub_app_id'      => '',
             // 'sub_merchant_id' => '',
