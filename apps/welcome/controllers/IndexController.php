@@ -9,10 +9,12 @@
 
 namespace Dc\Welcome\Controllers;
 
+use Phalcon\Di;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller {
 
     public function indexAction() {
+        
     }
 }
