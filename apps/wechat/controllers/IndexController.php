@@ -14,7 +14,6 @@ use Phalcon\Mvc\Controller;
 class IndexController extends Controller {
 
     public function indexAction() {
-        $this->di->get('config');
         echo 'dwa';
     }
 }

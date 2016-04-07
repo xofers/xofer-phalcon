@@ -95,6 +95,7 @@ $di->set('view',function () {
  * Registering a mysql write connnect
  */
 $di->setShared('dbWrite', function() use ($config) {
+    print_r($config->db_w->toArray());
     return new DbAdapter($config->db_w->toArray());
 });
 
@@ -128,7 +129,7 @@ $di->set('session', function() use ($config) {
 /**
  * Registering a model cache
  */
-$di->set('modelsCache', function () use ($config) {
+$di->set('cacheModel', function () use ($config) {
 
     $frontCache = new \Phalcon\Cache\Frontend\Data([
         'lifetime' => 86400,
@@ -140,7 +141,7 @@ $di->set('modelsCache', function () use ($config) {
             \Memcached::OPT_HASH => \Memcached::HASH_MD5,
             \Memcached::OPT_PREFIX_KEY => '_DCWX',
         ],
-        'prefix' => '_MODEL_CACHE_'
+        'prefix' => '_CACHE_MODEL__'
     ]);
 
     return $cache;
