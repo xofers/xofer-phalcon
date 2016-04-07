@@ -15,7 +15,7 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => '122.144.133.170',
+        'host'      => '127.0.0.1',
 
         'username'  => 'duocai_dev',
 
@@ -33,7 +33,7 @@ return  [
 
         'adapter'   => 'Mysql',
 
-        'host'      => '122.144.133.170',
+        'host'      => '127.0.0.1',
 
         'username'  => 'duocai_dev',
 

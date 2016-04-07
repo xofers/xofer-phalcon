@@ -95,7 +95,6 @@ $di->set('view',function () {
  * Registering a mysql write connnect
  */
 $di->setShared('dbWrite', function() use ($config) {
-    print_r($config->db_w->toArray());
     return new DbAdapter($config->db_w->toArray());
 });
 
