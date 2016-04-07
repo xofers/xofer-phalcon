@@ -7,7 +7,7 @@
  * @datetime    :2016-3-28
  */
 
-namespace Dc\Welcome\Controllers;
+namespace Dc\Wechat\Controllers;
 
 use Phalcon\Mvc\Controller;
 use EasyWeChat\Foundation\Application;
