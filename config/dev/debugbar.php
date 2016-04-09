@@ -33,7 +33,7 @@ return array(
 		 |
 		 */
 		'storage' => array(
-			'enabled' => true,
+			'enabled' => false,
 			'driver' => 'file', // file, mongodb
 			'path' => !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/debugbar/', // For file driver
 		),
