@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'debug',
-            'file'  => $_SERVER['DC_DIR_LOG_ERROR'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

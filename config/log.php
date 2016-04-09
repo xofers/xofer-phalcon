@@ -15,7 +15,7 @@ return  [
 
         'level' =>  \Monolog\Logger::ERROR,
 
-        'file'  =>  APP_PATH.'/.storage/wechat/'.date('Ym').'/'.date('Ymd').'.log',
+        'file'  =>  $_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
 
     ],
 

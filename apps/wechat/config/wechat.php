@@ -36,8 +36,8 @@ return  [
          * file：日志文件位置(绝对路径!!!)，要求可写权限
          */
         'log' => [
-            'level' => 'debug',
-            'file'  => APP_PATH.'/.storage/wechat/'.date('Ym').'/'.date('Ymd').'.log',
+            'level' => 'error',
+            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

@@ -34,7 +34,7 @@ return array(
 		'storage' => array(
 			'enabled' => true,
 			'driver' => 'file', // file, mongodb
-			'path' => '../.storage/debugbar', // For file driver
+			'path' => APP_PATH.'/.storage/debugbar', // For file driver
 		),
 
 		/*

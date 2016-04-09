@@ -35,7 +35,7 @@ return array(
 		'storage' => array(
 			'enabled' => true,
 			'driver' => 'file', // file, mongodb
-			'path' => $_SERVER['DC_DIR_LOG_ERROR'].'/debugbar', // For file driver
+			'path' => $_SERVER['DC_WX_DIR_LOG'].'/debugbar/', // For file driver
 		),
 
 		/*
