@@ -21,9 +21,11 @@ $di = new FactoryDefault();
  */
 $di->setShared('config',function(){
 
-    $dir    = IS_DEV ? 'dev/' : 'online/';
-    $config = Loader::loadDir(APP_PATH.'/config/'. $dir);
+    $configDir = APP_PATH.'/config/';
+    $configDir .= !IS_DEV ?: 'dev/';
+    $config = Loader::loadDir($configDir);
 
+    IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
     return $config;
 });
 
@@ -41,7 +43,7 @@ $di->set('router',function(){
     $router->setDefaultModule("welcome");
 
     //设置模块的默认路由
-    $module = array_flip(array_keys(Loader::load(APP_PATH.'/config/modules.php')->toArray()));
+    $module = array_flip(array_keys(Loader::load(APP_PATH.'/apps/modules.php')->toArray()));
     array_walk($module,function($val,$key,$router){
         $router->add('/'.$key,['controller'=> 'index','action' => 'index', 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
         $router->add('/'.$key.'/:controller',['controller'=> 1,'action' => 'index','module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
@@ -49,7 +51,7 @@ $di->set('router',function(){
     },$router);
 
     //设置自定义路由
-    $myRouters = Loader::load(APP_PATH.'/config/routers.php')->toArray();
+    $myRouters = Loader::load(APP_PATH.'/apps/routers.php')->toArray();
     if(!empty($myRouters)){
         array_walk($myRouters,function($val,$key,$router){
             $router->add($key,$val);
@@ -73,12 +75,15 @@ $di->set('dispatcher',function () use ($config) {
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
         define("MODULE_NAME",$dispatcher->getModuleName());
         define("ACTION_NAME",$dispatcher->getActionName());
-        $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/');
+
+        $configDir = APP_PATH.'/apps/'.MODULE_NAME.'/config/';
+        $configDir .= !IS_DEV ?: 'dev/';
+
+        //加载对应模块下的配置
+        $moduleConfig = Loader::loadDir($configDir);
         $config->merge($moduleConfig);
-        if(IS_DEV){
-            $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/dev/');
-            $config->merge($moduleConfig);
-        }
+
+        IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
     });
 
     $dispatcher->setEventsManager($eventsManager);
