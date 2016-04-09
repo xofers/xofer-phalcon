@@ -9,11 +9,12 @@
 
 namespace Dc\Wechat\Controllers;
 
+use Dc\Lib\Log;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller {
 
     public function indexAction() {
-        echo "aa";
+        Log::debug('xxx',['testArr']);
     }
 }
