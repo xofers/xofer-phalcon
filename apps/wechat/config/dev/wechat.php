@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'debug',
-            'file'  => APP_PATH.'/.storage/wechat/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => APP_PATH.'/.storage/'.MODULE_NAME.'/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

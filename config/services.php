@@ -69,13 +69,14 @@ $di->set('dispatcher',function () use ($config) {
 
     $dispatcher     = new Dispatcher();
     $eventsManager  = new EventsManager();
-
     //加载各模块下对应的配置文件
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
-        $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.$dispatcher->getModuleName().'/config/');
+        define("MODULE_NAME",$dispatcher->getModuleName());
+        define("ACTION_NAME",$dispatcher->getActionName());
+        $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/');
         $config->merge($moduleConfig);
         if(IS_DEV){
-            $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.$dispatcher->getModuleName().'/config/dev/');
+            $moduleConfig = Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/dev/');
             $config->merge($moduleConfig);
         }
     });
@@ -84,6 +85,18 @@ $di->set('dispatcher',function () use ($config) {
     $dispatcher->setDefaultNamespace("Dc\Welcome\Controllers");
 
     return $dispatcher;
+});
+
+/**
+ * Registering a logger
+ */
+$di->set('logger',function () use($config) {
+
+    $logger = new Monolog\Logger(MODULE_NAME);
+    $config->log->file = str_replace('MODULE_NAME',MODULE_NAME,$config->log->file);
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file,$config->log->level));
+
+    return $logger;
 });
 
 /**

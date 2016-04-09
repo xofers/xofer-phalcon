@@ -9,16 +9,15 @@
 
 namespace Dc\Lib;
 
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Handler\NullHandler;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
+use Phalcon\Di,
+    Monolog\Logger,
+    Psr\Log\LoggerInterface,
+    Monolog\Handler\ErrorLogHandler,
+    EasyWeChat\Support\Log as SupportLog;
 
-/**
- * Class Log.
- */
 class Log
 {
+
     /**
      * Logger instance.
      *
@@ -33,7 +32,20 @@ class Log
      */
     public static function getLogger()
     {
-        return self::$logger ?: self::$logger = self::createDefaultLogger();
+        if(self::$logger){
+            return self::$logger;
+        }
+
+        $logger = Di::getDefault()->get("logger");
+
+        if($logger instanceof LoggerInterface){
+            return self::$logger = $logger;
+        }
+
+        $logger = new Logger("LoggerService");
+        $logger->pushHandler(new ErrorLogHandler());
+
+        return self::$logger = $logger;
     }
 
     /**
@@ -57,48 +69,125 @@ class Log
     }
 
     /**
-     * Forward call.
+     * System is unusable.
      *
-     * @param string $method
-     * @param array  $args
-     *
-     * @return mixed
+     * @param string $message
+     * @param array $context
+     * @return null
      */
-    public static function __callStatic($method, $args)
-    {
-        return forward_static_call_array([self::getLogger(), $method], $args);
+    public static function emergency($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::emergency($message,$context);
     }
 
     /**
-     * Forward call.
+     * Action must be taken immediately.
      *
-     * @param string $method
-     * @param array  $args
+     * Example: Entire website down, database unavailable, etc. This should
+     * trigger the SMS alerts and wake you up.
      *
-     * @return mixed
+     * @param string $message
+     * @param array $context
+     * @return null
      */
-    public function __call($method, $args)
-    {
-        return call_user_func_array([self::getLogger(), $method], $args);
+    public static function alert($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::alert($message,$context);
     }
 
     /**
-     * Make a default log instance.
+     * Critical conditions.
      *
-     * @return \Monolog\Logger
+     * Example: Application component unavailable, unexpected exception.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
      */
-    private static function createDefaultLogger()
-    {
-        $log = new Logger('EasyWeChat');
-
-        if (defined('PHPUNIT_RUNNING')) {
-            $log->pushHandler(new NullHandler());
-        } else {
-            $log->pushHandler(new ErrorLogHandler());
-        }
-
-        return $log;
+    public static function critical($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::critical($message,$context);
     }
+
+    /**
+     * Runtime errors that do not require immediate action but should typically
+     * be logged and monitored.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function error($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::error($message,$context);
+    }
+
+    /**
+     * Exceptional occurrences that are not errors.
+     *
+     * Example: Use of deprecated APIs, poor use of an API, undesirable things
+     * that are not necessarily wrong.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function warning($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::warning($message,$context);
+    }
+
+    /**
+     * Normal but significant events.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function notice($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::notice($message,$context);
+    }
+
+    /**
+     * Interesting events.
+     *
+     * Example: User logs in, SQL logs.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function info($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::info($message,$context);
+    }
+
+    /**
+     * Detailed debug information.
+     *
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function debug($message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::debug($message,$context);
+    }
+
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public static function log($level, $message, array $context = array()){
+        SupportLog::setLogger(self::getLogger());
+        SupportLog::log($level, $message,$context);
+    }
+
 }
 
 

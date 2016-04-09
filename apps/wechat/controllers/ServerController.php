@@ -16,7 +16,7 @@ class ServerController extends Controller {
 
     public function indexAction() {
 
-        $wxApp = new Application($this->config->toArray());
+        $wxApp = new Application($this->config->wechat->toArray());
 
         $server = $wxApp->server;
         $server->setMessageHandler(function ($message) {
