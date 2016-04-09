@@ -12,8 +12,7 @@ namespace Dc\Lib;
 use Phalcon\Di,
     Monolog\Logger,
     Psr\Log\LoggerInterface,
-    Monolog\Handler\ErrorLogHandler,
-    EasyWeChat\Support\Log as SupportLog;
+    Monolog\Handler\ErrorLogHandler;
 
 class Log
 {
@@ -32,20 +31,7 @@ class Log
      */
     public static function getLogger()
     {
-        if(self::$logger){
-            return self::$logger;
-        }
-
-        $logger = Di::getDefault()->get("logger");
-
-        if($logger instanceof LoggerInterface){
-            return self::$logger = $logger;
-        }
-
-        $logger = new Logger("LoggerService");
-        $logger->pushHandler(new ErrorLogHandler());
-
-        return self::$logger = $logger;
+        return self::$logger ?: self::$logger = self::createDefaultLogger();
     }
 
     /**
@@ -69,6 +55,25 @@ class Log
     }
 
     /**
+     * Make a default log instance.
+     *
+     * @return \Monolog\Logger
+     */
+    private static function createDefaultLogger()
+    {
+        $logger = Di::getDefault()->get("logger");
+
+        if($logger instanceof LoggerInterface){
+            return self::$logger = $logger;
+        }
+
+        $logger = new Logger("LoggerService");
+        $logger->pushHandler(new ErrorLogHandler());
+
+        return self::$logger = $logger;
+    }
+
+    /**
      * System is unusable.
      *
      * @param string $message
@@ -76,8 +81,7 @@ class Log
      * @return null
      */
     public static function emergency($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::emergency($message,$context);
+        self::getLogger()->emergency($message,$context);
     }
 
     /**
@@ -91,8 +95,7 @@ class Log
      * @return null
      */
     public static function alert($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::alert($message,$context);
+        self::getLogger()->alert($message,$context);
     }
 
     /**
@@ -105,8 +108,7 @@ class Log
      * @return null
      */
     public static function critical($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::critical($message,$context);
+        self::getLogger()->critical($message,$context);
     }
 
     /**
@@ -118,8 +120,7 @@ class Log
      * @return null
      */
     public static function error($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::error($message,$context);
+        self::getLogger()->error($message,$context);
     }
 
     /**
@@ -133,8 +134,7 @@ class Log
      * @return null
      */
     public static function warning($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::warning($message,$context);
+        self::getLogger()->warning($message,$context);
     }
 
     /**
@@ -145,8 +145,7 @@ class Log
      * @return null
      */
     public static function notice($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::notice($message,$context);
+        self::getLogger()->notice($message,$context);
     }
 
     /**
@@ -159,8 +158,7 @@ class Log
      * @return null
      */
     public static function info($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::info($message,$context);
+        self::getLogger()->info($message,$context);
     }
 
     /**
@@ -171,8 +169,7 @@ class Log
      * @return null
      */
     public static function debug($message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::debug($message,$context);
+        self::getLogger()->debug($message,$context);
     }
 
     /**
@@ -184,8 +181,7 @@ class Log
      * @return null
      */
     public static function log($level, $message, array $context = array()){
-        SupportLog::setLogger(self::getLogger());
-        SupportLog::log($level, $message,$context);
+        self::getLogger()->log($level, $message,$context);
     }
 
 }
