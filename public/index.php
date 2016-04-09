@@ -21,7 +21,7 @@ try {
     $application->registerModules(\Phalcon\Config\Loader::load(APP_PATH.'/apps/modules.php')->toArray());
 
     //开启debugar
-    if(isset($di->get('config')['debugbar'])){
+    if(APP_DEBUG && isset($di->get('config')['debugbar'])){
         $di->set('app',$application);
         $di->set('config.debugbar',$di->get('config')->debugbar);
         $debugbar = new Snowair\Debugbar\ServiceProvider($di['config.debugbar']);
