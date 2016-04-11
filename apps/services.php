@@ -22,7 +22,7 @@ $di = new FactoryDefault();
 $di->setShared('config',function(){
 
     $configDir = APP_PATH.'/config/';
-    $configDir .= !IS_DEV ?: 'dev/';
+    $configDir .= IS_DEV ?'dev/': '';
     $config = Loader::loadDir($configDir);
 
     IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));

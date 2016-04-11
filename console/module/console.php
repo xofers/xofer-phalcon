@@ -11,8 +11,8 @@ namespace Dc\Module;
 
 use Phalcon\Cli\Environment\EnvironmentAwareInterface;
 use Phalcon\Cli\Environment\EnvironmentInterface;
+use Phalcon\Cli\Console\Extended as PhConsole;
 use Phalcon\Di\FactoryDefault\Cli as CliDi;
-use Phalcon\Cli\Console as PhConsole;
 use Phalcon\DiInterface;
 
 class Console extends PhConsole implements EnvironmentAwareInterface

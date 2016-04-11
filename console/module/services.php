@@ -2,10 +2,8 @@
 /**
  * Services are globally registered in this file
  */
-use Phalcon\Config\Loader,
-    Phalcon\Mvc\Dispatcher,
-    Phalcon\DI\FactoryDefault\c,
-    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Config\Loader;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 /**
  * Registering a config
@@ -13,8 +11,10 @@ use Phalcon\Config\Loader,
 $di->setShared('config',function(){
 
     $configDir = APP_PATH.'/config/';
-    $configDir .= !IS_DEV ?: 'dev/';
+    $configDir .= IS_DEV ? 'dev/' : '';
     $config = Loader::loadDir($configDir);
+    var_dump($config);
+    die();
 
     IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
     return $config;

@@ -11,16 +11,11 @@
 $loader = new \Phalcon\Loader();
 
 $loader->registerDirs([
-    APP_PATH . '/console/task'
+    APP_PATH . '/console/tasks'
 ],true);
 
 $loader->registerNamespaces(array(
-    'Dc\Modules' => __DIR__ . '/../lib/',
-    'Dc\Lib\Models' => __DIR__ . '/../lib/models',
-    'Dc\Lib\Plugin' => __DIR__ . '/../lib/plugin',
-    'Dc\Lib\Tool' => __DIR__ . '/../lib/tool',
-    'Dc\Lib\Wx' => __DIR__ . '/../lib/wx',
-    'Dc\Lib\Erp' => __DIR__ . '/../lib/erp',
+    'Dc\Module' => APP_PATH . '/console/module/',
 ));
 
 $loader->register();

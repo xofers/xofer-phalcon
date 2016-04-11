@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'debug',
-            'file'  => !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => '/data/logs/duocai_wx/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**
