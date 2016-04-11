@@ -1,7 +1,8 @@
 {
     "require": {
         "overtrue/wechat": "~3.0",
-        "phalcon/incubator": "^2.0"
+        "phalcon/incubator": "^2.0",
+        "danzabar/phalcon-cli": "^1.0"
     },
     "require-dev": {
         "snowair/phalcon-debugbar": "^1.1"

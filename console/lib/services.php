@@ -30,8 +30,8 @@ $config = $di->getShared('config');
  */
 $di->set('logger',function () use($config) {
 
-    $logger = new Monolog\Logger(MODULE_NAME);
-    $config->log->file = str_replace('MODULE_NAME',MODULE_NAME,$config->log->file);
+    $logger = new Monolog\Logger('CLI');
+    $config->log->file = str_replace('MODULE_NAME','CLI',$config->log->file);
     $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file,$config->log->level));
 
     return $logger;

@@ -4,9 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1c4744e4b9afb811753134672d74c09",
-    "content-hash": "36556e44d6fd1fa0b36adf0f6eaf3a76",
+    "hash": "06b0838864bb50d861b26b2631079e7e",
+    "content-hash": "650842b6d464427340f8be4db05f0b25",
     "packages": [
+        {
+            "name": "danzabar/phalcon-cli",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Danzabar/phalcon-cli.git",
+                "reference": "0d6293d5d899158705f8e3a31886d176e595ee38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Danzabar/phalcon-cli/zipball/0d6293d5d899158705f8e3a31886d176e595ee38",
+                "reference": "0d6293d5d899158705f8e3a31886d176e595ee38",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/process": "2.7.*@dev"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "satooshi/php-coveralls": "v1.0.0",
+                "squizlabs/php_codesniffer": "dev-master",
+                "symfony/config": "2.7.*@dev",
+                "symfony/console": "2.7.*@dev",
+                "symfony/filesystem": "2.7.*@dev",
+                "symfony/stopwatch": "2.7.*@dev",
+                "symfony/yaml": "2.7.*@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Danzabar\\CLI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Cox",
+                    "email": "danzabian@gmail.com",
+                    "homepage": "http://www.valeska.co.uk"
+                }
+            ],
+            "description": "Tools that extend the functionality of the Phalcon frameworks CLI",
+            "time": "2016-01-06 08:00:33"
+        },
         {
             "name": "doctrine/cache",
             "version": "v1.6.0",
@@ -784,6 +831,55 @@
                 "shim"
             ],
             "time": "2016-01-20 09:13:37"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.7.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff",
+                "reference": "19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-03-17 11:37:14"
         },
         {
             "name": "symfony/psr-http-message-bridge",

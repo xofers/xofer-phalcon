@@ -1,3 +1,4 @@
+#!/usr/local/duocai/php/bin/php -q
 <?php
 /**
  *
@@ -8,9 +9,7 @@
  *
  */
 
-use Phalcon\Di\FactoryDefault\Cli as CliDi;
-use Phalcon\Cli\Environment\Environment;
-use Dc\Module\Console;
+use Phalcon\Di\FactoryDefault\Cli as CliDI;
 
 //引入包资源
 require_once '../vendor/autoload.php';
@@ -23,64 +22,39 @@ define('APP_DEBUG', true);
 define('APP_NAME', '多彩换新');
 define('APP_PATH', realpath('..'));
 define('ROOT_PATH', __DIR__.DIRECTORY_SEPARATOR);
-define("IS_DEV",isset($_SERVER['DC_ENV']) && in_array($_SERVER['DC_ENV'], ['dev', 'local']) ? $_SERVER['DC_ENV'] : false);
 
-//注册类加载
-require_once '../console/module/loader.php';
+//注册tasks目录下的所有类
+(new \Phalcon\Loader())->registerDirs([
+    'tasks'
+],true)->register();
 
-$di         =   new CliDi();
+//创建一个DI
+$di = new CliDI();
 
-//require_once '../console/module/services.php';
+//创建一个cli应用
+$app = new Danzabar\CLI\Application($di);
 
-$console    =   new Console();
-$config =  new \Phalcon\Config([
-    'appName' => 'My Console App',
-    'version' => '1.0',
-
-    /**
-     * tasksDir is the absolute path to your tasks directory
-     * For instance, 'tasksDir' => realpath(dirname(dirname(__FILE__))).'/tasks',
-     */
-    'tasksDir' => APP_PATH.'/console/tasks',
-
-    /**
-     * annotationsAdapter is the choosen adapter to read annotations.
-     * Adapter by default: memory
-     */
-    'annotationsAdapter' => 'memory',
-
-    'printNewLine' => true
-]);
-
-$di->set('config', function () use ($config) {
-    return $config;
-});
-
-
-$console->setDI($di);
-
-$console->setEnvironment(new Environment);
-
-
-/**
- * Process the console arguments
- */
-$arguments = [];
-$params = [];
-
-foreach ($argv as $k => $arg) {
-    if ($k == 1) {
-        $arguments['task'] = $arg;
-    } elseif ($k == 2) {
-        $arguments['action'] = $arg;
-    } elseif ($k >= 3) {
-        $arguments['params'][] = $arg;
+//加载task
+$tasks  = [];
+if(isset($argv[1])){
+    if($argv[1] == 'help'){
+        if(isset($argv[2])){
+            $tasks[] = explode(":",$argv[2])[0].'Task';
+        }else{
+            $fileSystem = new \FilesystemIterator('tasks', \FilesystemIterator::SKIP_DOTS);
+            foreach ($fileSystem as $configFile) {
+                $tasks[] = $configFile->getBaseName('.php');
+            }
+        }
+    }else{
+        $tasks[] = explode(":",$argv[1])[0].'Task';
     }
 }
+array_walk($tasks,function($v,$k,$app){
+    if(class_exists($v = ucfirst($v))){
+        $app->add(new $v());
+    }
+},$app);
 
-try {
-    $console->handle($arguments);
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit(255);
-}
+//开始执行
+$app->start($argv);

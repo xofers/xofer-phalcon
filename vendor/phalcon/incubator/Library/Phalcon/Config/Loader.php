@@ -76,6 +76,7 @@ class Loader
         if (!is_dir($configsDir)) {
             return $config;
         }
+
         $fileSystem = new \FilesystemIterator($configsDir, \FilesystemIterator::SKIP_DOTS);
         /* @var \SplFileInfo $configFile*/
         foreach ($fileSystem as $configFile) {
