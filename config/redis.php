@@ -15,9 +15,15 @@ return  [
 
         'port' => 6379,
 
-        'auth' => '',
+//        'auth' => '',
 
         'persistent' => false,
+
+        'uniqueId'   => '6oS3upfdOrSAcYLG',
+
+        'lifetime'   => 3600 * 24,
+
+        'prefix'     => '_DCWX_SESSION_',
     ],
 
     'redis_r' =>[
@@ -26,9 +32,15 @@ return  [
 
         'port' => 6379,
 
-        'auth' => '',
+//        'auth' => '',
 
         'persistent' => false,
+
+        'uniqueId'   => '6oS3upfdOrSAcYLG',
+
+        'lifetime'   => 3600 * 24,
+
+        'prefix'     => '_DCWX_SESSION_',
     ]
 
 ];

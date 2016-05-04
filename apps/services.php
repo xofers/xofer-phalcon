@@ -9,7 +9,7 @@ use Phalcon\Mvc\View,
     Phalcon\DI\FactoryDefault,
     Phalcon\Events\Manager as EventsManager,
     Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
-    Phalcon\Session\Adapter\Libmemcached as Session;
+    Phalcon\Session\Adapter\Redis as Session;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -44,6 +44,7 @@ $di->set('router',function(){
 
     //设置模块的默认路由
     $module = array_flip(array_keys(Loader::load(APP_PATH.'/apps/modules.php')->toArray()));
+
     array_walk($module,function($val,$key,$router){
         $router->add('/'.$key,['controller'=> 'index','action' => 'index', 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
         $router->add('/'.$key.'/:controller',['controller'=> 1,'action' => 'index','module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
@@ -97,6 +98,9 @@ $di->set('dispatcher',function () use ($config) {
  */
 $di->set('logger',function () use($config) {
 
+    $logger = new \Phalcon\Logger\Multiple();
+    $logger->push(new \Phalcon\Logger\Adapter\File($config->log->file));
+
     $logger = new Monolog\Logger(MODULE_NAME);
     $config->log->file = str_replace('MODULE_NAME',MODULE_NAME,$config->log->file);
     $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file,$config->log->level));
@@ -132,16 +136,7 @@ $di->setShared('dbRead', function() use ($config) {
  */
 $di->set('session', function() use ($config) {
 
-    $session = new Session([
-        'servers' => $config->memcached->toArray(),
-        'client' => [
-            \Memcached::OPT_HASH => \Memcached::HASH_MD5,
-            \Memcached::OPT_PREFIX_KEY => '_DCWX',
-        ],
-        'lifetime' => 86400,
-        'prefix' => '_SESSION_', //实际整体前缀是：_DCWX_SESSION_
-    ]);
-
+    $session = new Session($config->redis);
     $session->start();
 
     return $session;
@@ -156,14 +151,10 @@ $di->set('cacheModel', function () use ($config) {
         'lifetime' => 86400,
     ]);
 
-    $cache = new \Phalcon\Cache\Backend\Libmemcached($frontCache, [
-        'servers' => $config->memcached->toArray(),
-        'client' => [
-            \Memcached::OPT_HASH => \Memcached::HASH_MD5,
-            \Memcached::OPT_PREFIX_KEY => '_DCWX',
-        ],
-        'prefix' => '_CACHE_MODEL__'
-    ]);
+    $redisConfig = $config->redis;
+    $redisConfig['prefix']  = 'cacheModel';
+
+    $cache = new \Phalcon\Cache\Backend\Redis($frontCache,$redisConfig);
 
     return $cache;
 });
