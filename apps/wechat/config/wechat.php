@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'error',
-            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/wechat/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

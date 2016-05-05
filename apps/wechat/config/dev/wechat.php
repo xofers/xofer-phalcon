@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'debug',
-            'file'  => '/data/logs/duocai_wx/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/wechat/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

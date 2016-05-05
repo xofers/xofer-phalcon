@@ -25,7 +25,7 @@ $di->setShared('config',function(){
     $configDir .= IS_DEV ?'dev/': '';
     $config = Loader::loadDir($configDir);
 
-    IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
+    !IS_DEV || IS_DEV == 'dev'?:$config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
     return $config;
 });
 
@@ -78,13 +78,13 @@ $di->set('dispatcher',function () use ($config) {
         define("ACTION_NAME",$dispatcher->getActionName());
 
         $configDir = APP_PATH.'/apps/'.MODULE_NAME.'/config/';
-        $configDir .= !IS_DEV ?: 'dev/';
+        $configDir .= IS_DEV ?'dev/': '';
 
         //加载对应模块下的配置
         $moduleConfig = Loader::loadDir($configDir);
         $config->merge($moduleConfig);
 
-        IS_DEV && IS_DEV == 'dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/config/'.IS_DEV.'/'));
+        !IS_DEV || IS_DEV=='dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/'.IS_DEV.'/'));
     });
 
     $dispatcher->setEventsManager($eventsManager);
@@ -97,9 +97,6 @@ $di->set('dispatcher',function () use ($config) {
  * Registering a logger
  */
 $di->set('logger',function () use($config) {
-
-    $logger = new \Phalcon\Logger\Multiple();
-    $logger->push(new \Phalcon\Logger\Adapter\File($config->log->file));
 
     $logger = new Monolog\Logger(MODULE_NAME);
     $config->log->file = str_replace('MODULE_NAME',MODULE_NAME,$config->log->file);
@@ -136,25 +133,18 @@ $di->setShared('dbRead', function() use ($config) {
  */
 $di->set('session', function() use ($config) {
 
-    $session = new Session($config->redis);
+    $session = new Session();
     $session->start();
 
     return $session;
 });
 
 /**
- * Registering a model cache
+ * Registering a read cache
  */
 $di->set('cacheModel', function () use ($config) {
 
-    $frontCache = new \Phalcon\Cache\Frontend\Data([
-        'lifetime' => 86400,
-    ]);
-
-    $redisConfig = $config->redis;
-    $redisConfig['prefix']  = 'cacheModel';
-
-    $cache = new \Phalcon\Cache\Backend\Redis($frontCache,$redisConfig);
+    $cache = new Predis\Client($config->toArray(), ['replication' => true]);
 
     return $cache;
 });

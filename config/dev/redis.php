@@ -9,38 +9,22 @@
  *
  */
 return [
+    [
+        'schame'    => 'tcp',
 
-    'redis_r' =>[
+        'host'      => '122.144.133.170' ,
 
-        'host' => '122.144.133.170' ,
+        'port'      => 6379,
 
-        'port' => 6379,
-
-//        'auth' => '',
-
-        'persistent' => false,
-
-        'uniqueId'   => '6oS3upfdOrSAcYLG',
-
-        'lifetime'   => 3600 * 24,
-
-        'prefix'     => '_DCWX_SESSION_',
+        'alias'     => 'master',
     ],
+    [
+        'schame'    => 'tcp',
 
-    'redis_w'=>[
+        'host'      => '122.144.133.170' ,
 
-        'host' => '122.144.133.170' ,
+        'port'      => 6379,
 
-        'port' => 6379,
-
-//        'auth' => '',
-
-        'persistent' => false,
-
-        'uniqueId'   => '6oS3upfdOrSAcYLG',
-
-        'lifetime'   => 3600 * 24,
-
-        'prefix'     => '_DCWX_SESSION_',
+        'alias'     => 'slave-01',
     ]
 ];
