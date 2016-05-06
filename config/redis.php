@@ -7,40 +7,29 @@
  * @datetime    :2016-3-28
  */
 
-return  [
+return [
 
-    'redis_w'=>[
+    'redis' =>  [
 
-        'host' => $_SERVER['DC_REDIS_MASTER_HOST'],
+        [
+            'schame'    => 'tcp',
 
-        'port' => 6379,
+            'host'      => $_SERVER['DC_REDIS_MASTER_HOST'],
 
-//        'auth' => '',
+            'port'      => 6379,
 
-        'persistent' => false,
+            'alias'     => 'master',
+        ],
+        [
+            'schame'    => 'tcp',
 
-        'uniqueId'   => '6oS3upfdOrSAcYLG',
+            'host'      => $_SERVER['DC_REDIS_SLAVE_HOST'],
 
-        'lifetime'   => 3600 * 24,
+            'port'      => 6379,
 
-        'prefix'     => '_DCWX_SESSION_',
-    ],
+            'alias'     => 'slave-01',
+        ]
 
-    'redis_r' =>[
-
-        'host' => $_SERVER['DC_REDIS_SLAVE_HOST'] ,
-
-        'port' => 6379,
-
-//        'auth' => '',
-
-        'persistent' => false,
-
-        'uniqueId'   => '6oS3upfdOrSAcYLG',
-
-        'lifetime'   => 3600 * 24,
-
-        'prefix'     => '_DCWX_SESSION_',
     ]
 
 ];

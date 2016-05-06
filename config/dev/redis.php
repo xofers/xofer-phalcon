@@ -9,22 +9,28 @@
  *
  */
 return [
-    [
-        'schame'    => 'tcp',
 
-        'host'      => '122.144.133.170' ,
+    'redis' =>  [
 
-        'port'      => 6379,
+        [
+            'schame'    => 'tcp',
 
-        'alias'     => 'master',
-    ],
-    [
-        'schame'    => 'tcp',
+            'host'      => '122.144.133.170' ,
 
-        'host'      => '122.144.133.170' ,
+            'port'      => 6379,
 
-        'port'      => 6379,
+            'alias'     => 'master',
+        ],
+        [
+            'schame'    => 'tcp',
 
-        'alias'     => 'slave-01',
+            'host'      => '122.144.133.170' ,
+
+            'port'      => 6379,
+
+            'alias'     => 'slave-01',
+        ]
+
     ]
+
 ];

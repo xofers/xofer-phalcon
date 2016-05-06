@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'debug',
-            'file'  => $_SERVER['DC_WX_DIR_LOG'].'/wechat/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/wechat/'.date('Ym').'/'.date('Ymd').'.log',
         ],
 
         /**

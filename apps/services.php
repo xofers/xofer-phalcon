@@ -19,7 +19,7 @@ $di = new FactoryDefault();
 /**
  * Registering a config
  */
-$di->setShared('config',function(){
+$di->set('config',function(){
 
     $configDir = APP_PATH.'/config/';
     $configDir .= IS_DEV ?'dev/': '';
@@ -32,7 +32,7 @@ $di->setShared('config',function(){
 /**
  * get all config
  */
-$config = $di->getShared('config');
+$config = $di->get('config');
 
 /**
  * Registering a router
@@ -76,15 +76,6 @@ $di->set('dispatcher',function () use ($config) {
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
         define("MODULE_NAME",$dispatcher->getModuleName());
         define("ACTION_NAME",$dispatcher->getActionName());
-
-        $configDir = APP_PATH.'/apps/'.MODULE_NAME.'/config/';
-        $configDir .= IS_DEV ?'dev/': '';
-
-        //加载对应模块下的配置
-        $moduleConfig = Loader::loadDir($configDir);
-        $config->merge($moduleConfig);
-
-        !IS_DEV || IS_DEV=='dev' ?: $config->merge(Loader::loadDir(APP_PATH.'/apps/'.MODULE_NAME.'/config/'.IS_DEV.'/'));
     });
 
     $dispatcher->setEventsManager($eventsManager);
@@ -142,9 +133,9 @@ $di->set('session', function() use ($config) {
 /**
  * Registering a read cache
  */
-$di->set('cacheModel', function () use ($config) {
+$di->set('cache', function () use ($config) {
 
-    $cache = new Predis\Client($config->toArray(), ['replication' => true]);
+    $cache = new Predis\Client($config->redis->toArray(), ['replication' => true]);
 
     return $cache;
 });

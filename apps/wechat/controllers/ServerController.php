@@ -11,25 +11,9 @@ namespace Dc\Wechat\Controllers;
 
 use EasyWeChat\Message\News;
 use EasyWeChat\Message\Text;
-use EasyWeChat\Foundation\Application;
 use Phalcon\Mvc\Controller;
 
 class ServerController extends Controller {
-
-    /**
-     * @var object 微信用户
-     */
-    private $user;
-
-    /**
-     * @var object 微信菜单
-     */
-    private $menu;
-
-    /**
-     * @var object 微信授权
-     */
-    private $oauth;
 
     /**
      * 服务端验证
@@ -37,54 +21,39 @@ class ServerController extends Controller {
      * @throws \EasyWeChat\Core\Exceptions\InvalidArgumentException
      */
     public function indexAction() {
-        $wxApp = new Application($this->config->wechat->toArray());
-
-        $server = $wxApp->server;
-        $server->setMessageHandler(function ($message) {
-            return "您好！欢迎关注我!当前事件为".$message->MsgType;
+        $this->wechat->server->setMessageHandler(function ($message) {
+            switch ($message->MsgType) {
+                case 'text':
+                    # 文字消息...
+                    return $this->TextReplay($message);
+                    break;
+                case 'image':
+                    # 图片消息...
+                case 'voice':
+                    # 语音消息...
+                case 'video':
+                    # 视频消息...
+                case 'location':
+                    # 坐标消息...
+                case 'link':
+                    # 链接消息...
+                case 'event':
+                    switch (strtolower($message->Event)) {
+                        case 'click':
+                            return $this->clickEvent($message);
+                            break;
+                        case 'subscribe':
+                        default:
+                            return $this->defaultReplay($message);
+                            break;
+                    }
+                default:
+                    return $this->defaultReplay($message);
+                    break;
+            }
         });
 
-        $server->serve()->send();
-
-//        $wxApp = new Application($this->config->wechat->toArray());
-//        $this->user = $wxApp->user;
-//        $this->menu = $wxApp->menu;
-//        $this->oauth = $wxApp->oauth;
-//
-//        $server = $wxApp->server;
-//        $server->setMessageHandler(function ($message) {
-//            return 'aa';
-//            switch ($message->MsgType) {
-//                case 'text':
-//                    return $this->TextReplay($message);
-//                    # 文字消息...
-//                case 'image':
-//                    # 图片消息...
-//                case 'voice':
-//                    # 语音消息...
-//                case 'video':
-//                    # 视频消息...
-//                case 'location':
-//                    # 坐标消息...
-//                case 'link':
-//                    # 链接消息...
-//                case 'event':
-//                    switch ($message->Event) {
-//                        case 'click':
-//                            return $this->clickEvent($message);
-//                            break;
-//                        case 'subscribe':
-//                        default:
-//                            return $this->defaultReplay($message);
-//                            break;
-//                    }
-//                default:
-//                    return $this->defaultReplay($message);
-//                    break;
-//            }
-//        });
-
-//        $server->serve()->send();
+        $this->wechat->server->serve()->send();
     }
 
     /**
@@ -95,132 +64,139 @@ class ServerController extends Controller {
      * @return string
      */
     public function clickEvent($message){
-        $newsList = [];
-        $news = new News();
         switch ($message->EventKey) {
             case "wx_anli":
-                $news->title     = '目睹施工全过程，真实可靠';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=4&sn=ce4a73febfe884aec1ceee560ad7a35a#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-WBGAZKqtAAFluG39tSE491.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '怎么花最少的钱提升出租屋的格调？';
-                $news->url       = '	http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=4&sn=5518922dcfc75cc40fe446432f1e844d#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OoSAMeRbAAAPCwo4J9k035.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '新年换新家，看看贵阳小媳妇们是怎么做的？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401789131&idx=3&sn=b6c8a58dcf1829e9ebd76aa24c03e78d#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OsSAYmdqAAAKZS1iE7o437.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '四合院与居民小区的吊顶换新';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=6&sn=9568a43dd19893a198e9ab4fad8d355e#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OuKACEr0AAAPOzpXpOQ948.jpg';
-                $newsList[]      = $news;
-
-                return $newsList;
+                $list = [
+                    [
+                        'title' =>  '目睹施工全过程，真实可靠',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=4&sn=ce4a73febfe884aec1ceee560ad7a35a#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-WBGAZKqtAAFluG39tSE491.jpg'
+                    ],
+                    [
+                        'title' =>  '怎么花最少的钱提升出租屋的格调？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=4&sn=5518922dcfc75cc40fe446432f1e844d#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OoSAMeRbAAAPCwo4J9k035.jpg'
+                    ],
+                    [
+                        'title' =>  '新年换新家，看看贵阳小媳妇们是怎么做的？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401789131&idx=3&sn=b6c8a58dcf1829e9ebd76aa24c03e78d#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OsSAYmdqAAAKZS1iE7o437.jpg'
+                    ],
+                    [
+                        'title' =>  '四合院与居民小区的吊顶换新',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=6&sn=9568a43dd19893a198e9ab4fad8d355e#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-OuKACEr0AAAPOzpXpOQ948.jpg'
+                    ]
+                ];
+                return array_map(function($value){return new News($value);},$list);
                 break;
 
             case "wx_red":
-                $news->title     = '你的现金红包到了，点击领取';
-                $news->url       = 'http://duocai.cn/m/wxmp/red';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0A/wKgBBFcfS1KAaFY0AAP-u-Y8Gr8622.jpg';
+                $list = [
+                    [
+                        'title' =>  '你的现金红包到了，点击领取',
+                        'url'   =>  'http://duocai.cn/m/wxmp/red',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/0A/wKgBBFcfS1KAaFY0AAP-u-Y8Gr8622.jpg'
+                    ]
+                ];
 
-                return $news;
+                return array_map(function($value){return new News($value);},$list);
                 break;
-
             case "wx_huanxin":
-                $news->title     = '换新视频如何挑选好吊顶？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403557097&idx=2&sn=23655588d2001f5338fa0e4bcfd23ecd#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-VymAbQIDAAMFYyyiUeg422.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '撕壁纸、贴壁纸都大有学问，看专业人士是如何做的？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403630109&idx=3&sn=b89b3ebc9fed2214043b0fca1382e260#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PCGAdBJUAAAP7gPaHmk256.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '如何让家里花小钱大变样？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=5&sn=9607ea7edcb63ee43bf8cda085a76218#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PEeAT7OcAAAQDkUWYDc255.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '墙面发黑怎么办？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403345148&idx=2&sn=84a01be149684e211d41a168a0387652#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PGOAbs1AAAAKNZUyhmU754.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '这么贴壁纸，一万年不翘边';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403307422&idx=4&sn=57ee5e1453267bc4239233d34c91ea36#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PIKAa7KWAAANZ88iL_0773.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '墙面结构性裂缝怎么办？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402397477&idx=3&sn=0327aec4fa93e530f01b7ec0ec06238a#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PJ2AMyRoAAAPq0lJMUI941.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '集成吊顶怎么安装？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=5&sn=ba623f9c1cc5069847a027a694f25b47#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PNOAArxMAAAVvdV6JCM354.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '墙面发霉怎么快速轻松处理？';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402072036&idx=6&sn=d9fa56f4073d01ebfe9e237f1b71d17f#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PPWAVLR9AAANoRKBnGY205.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '看看日本人的卫生间，你家的叫“水房”！';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=3&sn=1bd2873a060e86be99fbe710847fa9e4#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PQyASCJIAAASdRDBr-k861.jpg';
-                $newsList[]      = $news;
-
-                return $newsList;
+                $list = [
+                    [
+                        'title' =>  '换新视频如何挑选好吊顶？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403557097&idx=2&sn=23655588d2001f5338fa0e4bcfd23ecd#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-VymAbQIDAAMFYyyiUeg422.jpg',
+                    ],
+                    [
+                        'title' =>  '撕壁纸、贴壁纸都大有学问，看专业人士是如何做的？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403630109&idx=3&sn=b89b3ebc9fed2214043b0fca1382e260#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PCGAdBJUAAAP7gPaHmk256.jpg'
+                    ],
+                    [
+                        'title' =>  '如何让家里花小钱大变样？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=5&sn=9607ea7edcb63ee43bf8cda085a76218#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PEeAT7OcAAAQDkUWYDc255.jpg'
+                    ],
+                    [
+                        'title' =>  '墙面发黑怎么办？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403345148&idx=2&sn=84a01be149684e211d41a168a0387652#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PGOAbs1AAAAKNZUyhmU754.jpg'
+                    ],
+                    [
+                        'title' =>  '这么贴壁纸，一万年不翘边',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403307422&idx=4&sn=57ee5e1453267bc4239233d34c91ea36#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PIKAa7KWAAANZ88iL_0773.jpg',
+                    ],
+                    [
+                        'title' =>  '墙面结构性裂缝怎么办？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402397477&idx=3&sn=0327aec4fa93e530f01b7ec0ec06238a#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PJ2AMyRoAAAPq0lJMUI941.jpg'
+                    ],
+                    [
+                        'title' =>  '集成吊顶怎么安装？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402186726&idx=5&sn=ba623f9c1cc5069847a027a694f25b47#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PNOAArxMAAAVvdV6JCM354.jpg'
+                    ],
+                    [
+                        'title' =>  '墙面发霉怎么快速轻松处理？',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=402072036&idx=6&sn=d9fa56f4073d01ebfe9e237f1b71d17f#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PPWAVLR9AAANoRKBnGY205.jpg',
+                    ],
+                    [
+                        'title' =>  '看看日本人的卫生间，你家的叫“水房”！',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=3&sn=1bd2873a060e86be99fbe710847fa9e4#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PQyASCJIAAASdRDBr-k861.jpg'
+                    ]
+                ];
+                return array_map(function($value){return new News($value);},$list);
                 break;
 
             case "wx_huodong":
-                $news->title     = '领红包|天天领现金红包，天天好运气!';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403947254&idx=1&sn=46ed729c1cf9269098423aa1d36080c4#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/03/wKgBBFcLf0GAWAceAAJkCZ2aYTE360.png';
-                $newsList[]      = $news;
-
-                $news->title     = '送爱奇艺VIP会员';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403747588&idx=1&sn=13e95995e0c45c33e062f8fb385949ba#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PnGATJcSAAAR4JX71Ow196.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '送《荒野猎人》电影票';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403630109&idx=1&sn=c3a30d1835263216365ad930590ead45#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PoaAUeIzAAAUEUw05Qk258.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '女神节7.2折优惠重磅来袭，连续两天';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=1&sn=4ebc6d0c55ba61d348592444f1d886bf#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PqCAW3YuAAASBYrXOyw544.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '【3月换新季】0元预约，送千元装修礼包';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403336566&idx=1&sn=777fafcbd47853a371195caa8c58fe37#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PryAUKm-AAAc5iodl4E719.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '399元一站换新家最后50单名额速来抢';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401753296&idx=1&sn=de9153fcec4db3cbed9cff4bf067b53b#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PtOABJi4AAAhk4mcMuo869.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '2016新年大礼到，多种福利大放送';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=2&sn=fc56550eb6401de7bf340e3f5ca298eb#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PuyANaK6AAAXM_zejw4930.jpg';
-                $newsList[]      = $news;
-
-                $news->title     = '899元辞旧迎新家';
-                $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=1&sn=64055fb8dec98425d806d392d98ed304#rd';
-                $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PwSAWaQVAAAjW0X5Who983.jpg';
-                $newsList[]      = $news;
-
-                return $newsList;
+                $list = [
+                    [
+                        'title' =>  '领红包|天天领现金红包，天天好运气!',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403947254&idx=1&sn=46ed729c1cf9269098423aa1d36080c4#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/03/wKgBBFcLf0GAWAceAAJkCZ2aYTE360.png'
+                    ],
+                    [
+                        'title' =>  '送爱奇艺VIP会员',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403747588&idx=1&sn=13e95995e0c45c33e062f8fb385949ba#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PnGATJcSAAAR4JX71Ow196.jpg'
+                    ],
+                    [
+                        'title' =>  '送《荒野猎人》电影票',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403630109&idx=1&sn=c3a30d1835263216365ad930590ead45#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PoaAUeIzAAAUEUw05Qk258.jpg',
+                    ],
+                    [
+                        'title' =>  '女神节7.2折优惠重磅来袭，连续两天',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403447300&idx=1&sn=4ebc6d0c55ba61d348592444f1d886bf#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PqCAW3YuAAASBYrXOyw544.jpg'
+                    ],
+                    [
+                        'title' =>  '3月换新季】0元预约，送千元装修礼包',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403336566&idx=1&sn=777fafcbd47853a371195caa8c58fe37#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PryAUKm-AAAc5iodl4E719.jpg'
+                    ],
+                    [
+                        'title' =>  '399元一站换新家最后50单名额速来抢',
+                        'url'   =>  'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401753296&idx=1&sn=de9153fcec4db3cbed9cff4bf067b53b#rd',
+                        'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PtOABJi4AAAhk4mcMuo869.jpg'
+                    ],
+                    [
+                        'title'=>'2016新年大礼到，多种福利大放送',
+                        'url'=> 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=2&sn=fc56550eb6401de7bf340e3f5ca298eb#rd',
+                        'image'=>'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PuyANaK6AAAXM_zejw4930.jpg'
+                    ],
+                    [
+                        'title'=>'899元辞旧迎新家',
+                        'url'=> 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=401922959&idx=1&sn=64055fb8dec98425d806d392d98ed304#rd',
+                        'image'=>'http://photo.res.ehuanxin.com/ehx/M00/00/00/wKgBBFb-PwSAWaQVAAAjW0X5Who983.jpg'
+                    ]
+                ];
+                return array_map(function($value){return new News($value);},$list);
                 break;
 
             case "wx_phone":
@@ -241,35 +217,35 @@ class ServerController extends Controller {
      * @return array
      */
     public function defaultReplay($message){
-        $newsList = [];
-        $news = new News();
+        $list = [
+            [
+                'title' =>  $this->user->get($message->FromUserName)->nickname. '，你的现金红包到了，点击领取',
+                'url'   =>  'http://duocai.cn/m/wxmp/red',
+                'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/0A/wKgBBFcfS1KAaFY0AAP-u-Y8Gr8622.jpg'
+            ],
+            [
+                'title' =>'【活动】深圳、苏州、南京、重庆新店大庆低至7折',
+                'url'   =>'http://duocai.cn/m/order/acti?campaignId=29',
+                'image' =>'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSTmASzXIAAM7BqOdUbk245.png'
+            ],
+            [
+                'title' =>'都说《欢乐颂》道具讲究，看了他们的家居道具后彻底服了',
+                'url'   =>'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=2651683205&idx=1&sn=b28d09ba7a7c490bc7b633aa4a909c49#rd',
+                'image' =>'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSZaAczLPAALyt1Vv51w484.png'
+            ],
+            [
+                'title' =>'你是情绪型消费，还是理智型消费？',
+                'url'   =>'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403935737&idx=1&sn=e9cce436b680057e7ea47ccd4da89cd2#rd',
+                'image' =>'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSb-ADPapAAFg4ZTDqTg940.png'
+            ],
+            [
+                'title'=>'家居装饰中，什么颜色适合搭配？',
+                'url'=>'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403557097&idx=1&sn=02e4820c4ecd3eda5da6ba3d76052a63#rd',
+                'image'=>'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSg-AXXpRAARfxZczVfE762.png'
+            ]
+        ];
 
-        $news->title     = $this->user->get($message->FromUserName)->nickname. '，你的现金红包到了，点击领取';
-        $news->url       = 'http://duocai.cn/m/wxmp/red';
-        $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0A/wKgBBFcfS1KAaFY0AAP-u-Y8Gr8622.jpg';
-        $newsList[]      = $news;
-
-        $news->title     = '【活动】深圳、苏州、南京、重庆新店大庆低至7折';
-        $news->url       = 'http://duocai.cn/m/order/acti?campaignId=29';
-        $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSTmASzXIAAM7BqOdUbk245.png';
-        $newsList[]      = $news;
-
-        $news->title     = '都说《欢乐颂》道具讲究，看了他们的家居道具后彻底服了';
-        $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=2651683205&idx=1&sn=b28d09ba7a7c490bc7b633aa4a909c49#rd';
-        $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSZaAczLPAALyt1Vv51w484.png';
-        $newsList[]      = $news;
-
-        $news->title     = '你是情绪型消费，还是理智型消费？';
-        $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403935737&idx=1&sn=e9cce436b680057e7ea47ccd4da89cd2#rd';
-        $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSb-ADPapAAFg4ZTDqTg940.png';
-        $newsList[]      = $news;
-
-        $news->title     = '家居装饰中，什么颜色适合搭配？';
-        $news->url       = 'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403557097&idx=1&sn=02e4820c4ecd3eda5da6ba3d76052a63#rd';
-        $news->image     = 'http://photo.res.ehuanxin.com/ehx/M00/00/0F/wKgBBFcpSg-AXXpRAARfxZczVfE762.png';
-        $newsList[]      = $news;
-
-        return $newsList;
+        return array_map(function($value){return new News($value);},$list);
     }
 
     /**
@@ -639,16 +615,15 @@ class ServerController extends Controller {
             'url'   =>'http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=504199567&idx=1&sn=bbeadbcf883ceb6e7ac2ddf2bc12903d#rd',
             'picUrl'=>'http://photo.res.ehuanxin.com/ehx/M00/00/0E/wKgBBFcocr2AFG0rAAFt42gnqpo107.png'
         ];
-
-        if(array_key_exists($message->content,$reply)){
-            if(array_key_exists('href',$reply[$message->content])){
-                return new Text(['content'=>"<a href='{$reply[$message->content]['href']}'>{$reply[$message->content]['title']}</a>"]);
+        if(array_key_exists($message->Content,$reply)){
+            if(array_key_exists('href',$reply[$message->Content])){
+                return new Text(['content'=>"<a href='{$reply[$message->Content]['href']}'>{$reply[$message->Content]['title']}</a>"]);
             }
-            if(array_key_exists('picUrl',$reply[$message->content])){
-                $reply[$message->content]['image'] = $reply[$message->content]['picUrl'];
-                return new News($reply[$message->content]);
+            if(array_key_exists('picUrl',$reply[$message->Content])){
+                $reply[$message->Content]['image'] = $reply[$message->Content]['picUrl'];
+                return new News($reply[$message->Content]);
             }
-            return new Text(['content'=>$reply[$message->content]['title']]);
+            return new Text(['content'=>$reply[$message->Content]['title']]);
         }
 
         return $this->defaultReplay($message);
@@ -662,87 +637,84 @@ class ServerController extends Controller {
     public function wechatMenuAction(){
         $menus = [
             [
-                "name" => "预约下单",
-                "type" => "view",
-                "key" => "http://duocai.cn/m/?style=wx",
-                "buttons" => [
+                "name"  =>  "预约下单",
+                "type"  =>  "view",
+                "url"   =>  "http://duocai.cn/m/?style=wx",
+                "sub_button" => [
                     [
-                        "name" => "预约下单",
-                        "type" => "view",
-                        "key" => "http://duocai.cn/m/?style=wx"
+                        "name"  =>  "预约下单",
+                        "type"  =>  "view",
+                        "url"   =>  "http://duocai.cn/m/?style=wx"
                     ],
                     [
-                        "name" => "订单查询",
-                        "type" => "view",
-                        "key" => "http://duocai.cn/m/ordercenter/login"
+                        "name"  =>  "订单查询",
+                        "type"  =>  "view",
+                        "url"   =>  "http://duocai.cn/m/ordercenter/login"
                     ],
                     [
-                        "name" => "案例推荐",
-                        "type" => "click",
-                        "key" => "wx_anli"
+                        "name"  =>  "案例推荐",
+                        "type"  =>  "click",
+                        "key"   =>  "wx_anli"
                     ],
                     [
-                        "name" => "换新视频",
-                        "type" => "click",
-                        "key" => "wx_huanxin"
-                    ],
-                ]
-
-            ],
-            [
-                "name" => "本周福利",
-                "type" => "view",
-                "key" => "http://buluo.qq.com/buluoadmin/home.html#/allposts/282201",
-                "buttons" => [
-                    [
-                        "name" => "拼团享七折",
-                        "type" => "view",
-                        "key" => "http://duocai.cn/m/order/acti?campaignId=29"
-                    ],
-                    [
-                        "name" => "今日福利",
-                        "type" => "click",
-                        "key" => "wx_red"
-                    ],
-                    [
-                        "name" => "多彩部落",
-                        "type" => "view",
-                        "key" => "http://buluo.qq.com/p/barindex.html?bid=282201&from=share_wechat"
-                    ],
-                    [
-                        "name" => "往期活动",
-                        "type" => "click",
-                        "key" => "wx_huodong"
+                        "name"  =>  "换新视频",
+                        "type"  =>  "click",
+                        "key"   =>  "wx_huanxin"
                     ],
                 ]
             ],
             [
-                "name" => " 关于多彩",
-                "type" => "view",
-                "key" => "http://m.vcooline.com/app/materials/196332?wxmuid=52677#mp.weixin.qq.com",
-                "buttons" => [
+                "name"  =>  "本周福利",
+                "type"  =>  "view",
+                "url"   =>  "http://buluo.qq.com/buluoadmin/home.html#/allposts/282201",
+                "sub_button" => [
                     [
-                        "name" => "门店查询",
-                        "type" => "view",
-                        "key" => "http://cc.duocai.cn/m/order/store?x=116.5208294561&y=39.79431078909&cityName=%E5%8C%97%E4%BA%AC"
+                        "name"  =>  "拼团享七折",
+                        "type"  =>  "view",
+                        "url"   =>  "http://duocai.cn/m/order/acti?campaignId=29"
                     ],
                     [
-                        "name" => "客服电话",
-                        "type" => "click",
-                        "key" => "wx_phone"
+                        "name"  =>  "今日福利",
+                        "type"  =>  "click",
+                        "key"   =>  "wx_red"
                     ],
                     [
-                        "name" => "商务合作",
-                        "type" => "view",
-                        "key" => "http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403868965&idx=1&sn=c184bd16c11d449f685d5233611ac2c8#rd"
+                        "name"  =>  "多彩部落",
+                        "type"  =>  "view",
+                        "url"   =>  "http://buluo.qq.com/p/barindex.html?bid=282201&from=share_wechat"
                     ],
-
-
+                    [
+                        "name"  =>  "往期活动",
+                        "type"  =>  "click",
+                        "key"   =>  "wx_huodong"
+                    ],
+                ]
+            ],
+            [
+                "name"  =>  "关于多彩",
+                "type"  =>  "view",
+                "url"   =>  "http://m.vcooline.com/app/materials/196332?wxmuid=52677#mp.weixin.qq.com",
+                "sub_button" => [
+                    [
+                        "name"  =>  "门店查询",
+                        "type"  =>  "view",
+                        "url"   =>  "http://cc.duocai.cn/m/order/store?x=116.5208294561&y=39.79431078909&cityName=%E5%8C%97%E4%BA%AC"
+                    ],
+                    [
+                        "name"  =>  "客服电话",
+                        "type"  =>  "click",
+                        "key"   =>  "wx_phone"
+                    ],
+                    [
+                        "name"  =>  "商务合作",
+                        "type"  =>  "view",
+                        "url"   =>  "http://mp.weixin.qq.com/s?__biz=MzA4OTQzMDYwOQ==&mid=403868965&idx=1&sn=c184bd16c11d449f685d5233611ac2c8#rd"
+                    ]
                 ]
             ]
         ];
 
-        $this->menu->add($menus);
+        $this->wechat->menu->add($menus);
     }
 
     /**
