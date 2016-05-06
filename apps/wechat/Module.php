@@ -2,6 +2,7 @@
 
 namespace Dc\Wechat;
 
+use Predis;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;

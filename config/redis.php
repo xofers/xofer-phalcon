@@ -27,6 +27,8 @@ return [
 
             'port'      => 6379,
 
+            'prefix'    => '_DCWX_',
+
             'alias'     => 'slave-01',
         ]
 

@@ -8,8 +8,7 @@ use Phalcon\Mvc\View,
     Phalcon\Mvc\Dispatcher,
     Phalcon\DI\FactoryDefault,
     Phalcon\Events\Manager as EventsManager,
-    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
-    Phalcon\Session\Adapter\Redis as Session;
+    Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -72,7 +71,7 @@ $di->set('dispatcher',function () use ($config) {
 
     $dispatcher     = new Dispatcher();
     $eventsManager  = new EventsManager();
-    //加载各模块下对应的配置文件
+
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
         define("MODULE_NAME",$dispatcher->getModuleName());
         define("ACTION_NAME",$dispatcher->getActionName());
@@ -124,8 +123,9 @@ $di->setShared('dbRead', function() use ($config) {
  */
 $di->set('session', function() use ($config) {
 
-    $session = new Session();
-    $session->start();
+    $session = new Predis\Client($config->redis->toArray(), ['replication' => true,'prefix' => '_DCWX_SESSIONS_'.strtoupper(MODULE_NAME).'_']);
+    $handler = new Predis\Session\Handler($session,['gc_maxlifetime'=>86400]);
+    $handler->register();
 
     return $session;
 });
@@ -135,7 +135,7 @@ $di->set('session', function() use ($config) {
  */
 $di->set('cache', function () use ($config) {
 
-    $cache = new Predis\Client($config->redis->toArray(), ['replication' => true]);
+    $cache = new Predis\Client($config->redis->toArray(), ['replication' => true,'prefix' => '_DCWX_CACHE_'.strtoupper(MODULE_NAME).'_']);
 
     return $cache;
 });
