@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7939f30d1c002dd5d58df6b9122204df",
-    "content-hash": "16294f7d0b97cf55ff2f06863603c692",
+    "hash": "2666d36a8c94c2740c23ca092231d8b3",
+    "content-hash": "982cc2017f33600d7cad83fb6432b3d9",
     "packages": [
         {
             "name": "danzabar/phalcon-cli",
@@ -239,16 +239,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.3",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b"
+                "reference": "31382fef2889136415751badebbd1cb022a4ed72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2e89629ff057ebb49492ba08e6995d3a6a80021b",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b",
+                "url": "https://packagist.phpcomposer.com/files/guzzle/psr7/31382fef2889136415751badebbd1cb022a4ed72.zip",
+                "reference": "31382fef2889136415751badebbd1cb022a4ed72",
                 "shasum": ""
             },
             "require": {
@@ -293,20 +293,81 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-02-18 21:54:00"
+            "time": "2016-04-13 19:56:01"
         },
         {
-            "name": "monolog/monolog",
-            "version": "1.18.2",
+            "name": "maximebf/debugbar",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "d9302891c1f0a0ac5a4f66725163a00537c6359f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
+                "url": "https://packagist.phpcomposer.com/files/maximebf/php-debugbar/d9302891c1f0a0ac5a4f66725163a00537c6359f.zip",
+                "reference": "d9302891c1f0a0ac5a4f66725163a00537c6359f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/log": "^1.0",
+                "symfony/var-dumper": "^2.6|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "time": "2016-01-22 12:22:23"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/Seldaek/monolog/5f56ed5212dc509c8dc8caeba2715732abb32dbf.zip",
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf",
                 "shasum": ""
             },
             "require": {
@@ -371,7 +432,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-04-02 13:12:58"
+            "time": "2016-04-12 18:29:35"
         },
         {
             "name": "overtrue/socialite",
@@ -425,16 +486,16 @@
         },
         {
             "name": "overtrue/wechat",
-            "version": "3.0.10",
+            "version": "3.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/wechat.git",
-                "reference": "69a03d9349150f03e11531be43d791b4d37c2e96"
+                "reference": "fee6ef0d25f4efb2543241d0a746e7c918b8abb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/wechat/zipball/69a03d9349150f03e11531be43d791b4d37c2e96",
-                "reference": "69a03d9349150f03e11531be43d791b4d37c2e96",
+                "url": "https://packagist.phpcomposer.com/files/overtrue/wechat/fee6ef0d25f4efb2543241d0a746e7c918b8abb5.zip",
+                "reference": "fee6ef0d25f4efb2543241d0a746e7c918b8abb5",
                 "shasum": ""
             },
             "require": {
@@ -478,32 +539,34 @@
                 "weixin",
                 "weixin-sdk"
             ],
-            "time": "2016-03-26 11:49:01"
+            "time": "2016-05-04 09:29:35"
         },
         {
             "name": "phalcon/incubator",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/incubator.git",
-                "reference": "e040517e0e05046bad7dae5e352b12ac30e28343"
+                "reference": "8b77b9fbe9ba08f9758520b6fc37d51ad211f5f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/incubator/zipball/e040517e0e05046bad7dae5e352b12ac30e28343",
-                "reference": "e040517e0e05046bad7dae5e352b12ac30e28343",
+                "url": "https://packagist.phpcomposer.com/files/phalcon/incubator/8b77b9fbe9ba08f9758520b6fc37d51ad211f5f8.zip",
+                "reference": "8b77b9fbe9ba08f9758520b6fc37d51ad211f5f8",
                 "shasum": ""
             },
             "require": {
-                "ext-phalcon": ">=2.0.4",
+                "ext-phalcon": "^2.0",
                 "php": ">=5.4",
                 "swiftmailer/swiftmailer": "~5.2"
             },
             "require-dev": {
-                "codeception/aerospike-module": "^0.1",
-                "codeception/codeception": "^2.1",
-                "codeception/mockery-module": "^0.2",
-                "squizlabs/php_codesniffer": "^2.5"
+                "codeception/aerospike-module": "~0.1",
+                "codeception/codeception": "~2.1",
+                "codeception/mockery-module": "~0.2",
+                "codeception/specify": "~0.4",
+                "codeception/verify": "~0.3",
+                "squizlabs/php_codesniffer": "~2.5"
             },
             "suggest": {
                 "duncan3dc/fork-helper": "To use extended class to access the beanstalk queue service",
@@ -532,7 +595,7 @@
                 "incubator",
                 "phalcon"
             ],
-            "time": "2016-02-05 19:41:15"
+            "time": "2016-05-04 22:50:11"
         },
         {
             "name": "pimple/pimple",
@@ -718,17 +781,65 @@
             "time": "2012-12-21 11:40:51"
         },
         {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.1",
+            "name": "snowair/phalcon-debugbar",
+            "version": "v1.1.27",
             "source": {
                 "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
+                "url": "https://github.com/snowair/phalcon-debugbar.git",
+                "reference": "4b60644b4a0796731c546b8679ccd90d04970c60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "url": "https://packagist.phpcomposer.com/files/snowair/phalcon-debugbar/4b60644b4a0796731c546b8679ccd90d04970c60.zip",
+                "reference": "4b60644b4a0796731c546b8679ccd90d04970c60",
+                "shasum": ""
+            },
+            "require": {
+                "ext-phalcon": ">=1.3.4|>=2.0",
+                "maximebf/debugbar": ">=1.10",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Snowair\\Debugbar\\": "src/"
+                },
+                "files": [
+                    "src/Debug.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "snowair",
+                    "email": "xcoolcc@gmail.com"
+                }
+            ],
+            "description": "Integrates PHP Debug Bar with Phalcon.",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "phalcon",
+                "profiler",
+                "webprofiler"
+            ],
+            "time": "2015-10-04 03:08:05"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v5.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/swiftmailer/swiftmailer/d8db871a54619458a805229a057ea2af33c753e8.zip",
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
                 "shasum": ""
             },
             "require": {
@@ -768,20 +879,20 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2015-06-06 14:19:39"
+            "time": "2016-05-01 08:45:47"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "99f38445a874e7becb8afc4b4a79ee181cf6ec3f"
+                "reference": "18b24bc32d2495ae79d76e777368786a6536fe31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/99f38445a874e7becb8afc4b4a79ee181cf6ec3f",
-                "reference": "99f38445a874e7becb8afc4b4a79ee181cf6ec3f",
+                "url": "https://packagist.phpcomposer.com/files/symfony/http-foundation/18b24bc32d2495ae79d76e777368786a6536fe31.zip",
+                "reference": "18b24bc32d2495ae79d76e777368786a6536fe31",
                 "shasum": ""
             },
             "require": {
@@ -821,7 +932,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-27 14:50:32"
+            "time": "2016-04-12 18:09:53"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -884,16 +995,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.7.11",
+            "version": "v2.7.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff"
+                "reference": "a49e4c67a6a52e9c5bce1f28d9ea8618f36a43d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff",
-                "reference": "19beeea4abd3b1566a1e6cdb15f72d0bae2e1fff",
+                "url": "https://packagist.phpcomposer.com/files/symfony/process/a49e4c67a6a52e9c5bce1f28d9ea8618f36a43d0.zip",
+                "reference": "a49e4c67a6a52e9c5bce1f28d9ea8618f36a43d0",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +1040,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-17 11:37:14"
+            "time": "2016-04-12 11:52:58"
         },
         {
             "name": "symfony/psr-http-message-bridge",
@@ -984,130 +1095,19 @@
                 "psr-7"
             ],
             "time": "2015-05-29 17:57:12"
-        }
-    ],
-    "packages-dev": [
-        {
-            "name": "maximebf/debugbar",
-            "version": "v1.11.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "d9302891c1f0a0ac5a4f66725163a00537c6359f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/d9302891c1f0a0ac5a4f66725163a00537c6359f",
-                "reference": "d9302891c1f0a0ac5a4f66725163a00537c6359f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "psr/log": "^1.0",
-                "symfony/var-dumper": "^2.6|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0"
-            },
-            "suggest": {
-                "kriswallsmith/assetic": "The best way to manage assets",
-                "monolog/monolog": "Log using Monolog",
-                "predis/predis": "Redis storage"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DebugBar\\": "src/DebugBar/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Bouroumeau-Fuseau",
-                    "email": "maxime.bouroumeau@gmail.com",
-                    "homepage": "http://maximebf.com"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Debug bar in the browser for php application",
-            "homepage": "https://github.com/maximebf/php-debugbar",
-            "keywords": [
-                "debug",
-                "debugbar"
-            ],
-            "time": "2016-01-22 12:22:23"
-        },
-        {
-            "name": "snowair/phalcon-debugbar",
-            "version": "v1.1.27",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/snowair/phalcon-debugbar.git",
-                "reference": "4b60644b4a0796731c546b8679ccd90d04970c60"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/snowair/phalcon-debugbar/zipball/4b60644b4a0796731c546b8679ccd90d04970c60",
-                "reference": "4b60644b4a0796731c546b8679ccd90d04970c60",
-                "shasum": ""
-            },
-            "require": {
-                "ext-phalcon": ">=1.3.4|>=2.0",
-                "maximebf/debugbar": ">=1.10",
-                "php": ">=5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Snowair\\Debugbar\\": "src/"
-                },
-                "files": [
-                    "src/Debug.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "snowair",
-                    "email": "xcoolcc@gmail.com"
-                }
-            ],
-            "description": "Integrates PHP Debug Bar with Phalcon.",
-            "keywords": [
-                "debug",
-                "debugbar",
-                "phalcon",
-                "profiler",
-                "webprofiler"
-            ],
-            "time": "2015-10-04 03:08:05"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "3841ed86527d18ee2c35fe4afb1b2fc60f8fae79"
+                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3841ed86527d18ee2c35fe4afb1b2fc60f8fae79",
-                "reference": "3841ed86527d18ee2c35fe4afb1b2fc60f8fae79",
+                "url": "https://packagist.phpcomposer.com/files/symfony/var-dumper/0e918c269093ba4c77fca14e9424fa74ed16f1a6.zip",
+                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6",
                 "shasum": ""
             },
             "require": {
@@ -1157,9 +1157,10 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-03-10 10:34:12"
+            "time": "2016-04-25 11:17:47"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

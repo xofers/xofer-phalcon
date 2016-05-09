@@ -3,9 +3,9 @@
         "overtrue/wechat": "~3.0",
         "phalcon/incubator": "^2.0",
         "danzabar/phalcon-cli": "^1.0",
-        "predis/predis": "^1.0"
+        "predis/predis": "^1.0",
+        "snowair/phalcon-debugbar": "^1.1"
     },
     "require-dev": {
-        "snowair/phalcon-debugbar": "^1.1"
     }
 }

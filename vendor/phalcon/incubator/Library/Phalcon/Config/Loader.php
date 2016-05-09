@@ -63,28 +63,4 @@ class Loader
                 throw new Exception('Config adapter for .'  . $extension . ' files is not support');
         }
     }
-
-    /**
-     * Load config files from directory and merge to one
-     *
-     * @param string $configsDir
-     * @return Config
-     */
-    public static function loadDir($configsDir)
-    {
-        $config = new Config();
-        if (!is_dir($configsDir)) {
-            return $config;
-        }
-
-        $fileSystem = new \FilesystemIterator($configsDir, \FilesystemIterator::SKIP_DOTS);
-        /* @var \SplFileInfo $configFile*/
-        foreach ($fileSystem as $configFile) {
-            if ($configFile->isFile()) {
-                $cfg = self::load($configFile->getRealPath());
-                $config->merge($cfg);
-            }
-        }
-        return $config;
-    }
 }

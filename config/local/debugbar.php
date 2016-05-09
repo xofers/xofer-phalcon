@@ -125,7 +125,7 @@ return array(
 			'db'              => true, // Display the sql statments infomations. Just for Phalcon ORM. 'db' and 'doctrine', you only can choose one!
 			'doctrine'        => false, // Display the sql statments infomations. Just for Doctrine ORM.'db' and 'doctrine', you only can choose one!
 			'view'            => false, // Display the rendered views infomations.
-			'cache'           => true, // Display the cache operation infomations.
+			'cache'           => false, // Display the cache operation infomations.
 			'mail'            => true,
 		),
 

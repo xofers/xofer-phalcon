@@ -7,6 +7,7 @@
 
 namespace Snowair\Debugbar;
 
+use Phalcon\Config;
 use Phalcon\Events\Manager;
 use Phalcon\Http\ResponseInterface;
 use Phalcon\Mvc\Application;
@@ -41,6 +42,8 @@ class ServiceProvider extends Injectable {
 				$config = new Php($configPath);
 				$base->merge($config);
 			}elseif( is_object($configPath) && $configPath instanceof Php){
+				$base->merge($configPath);
+			}elseif( is_object($configPath) && $configPath instanceof Config){
 				$base->merge($configPath);
 			}else{
 			}

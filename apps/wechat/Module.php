@@ -3,12 +3,12 @@
 namespace Dc\Wechat;
 
 use Predis;
+use Dc\Lib\Helper;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;
 use Phalcon\DiInterface;
 use EasyWeChat\Foundation\Application;
-use Phalcon\Config\Loader as ConfigLoader;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 
 class Module implements ModuleDefinitionInterface
@@ -24,7 +24,6 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces([
             'Dc\Wechat\Controllers' => __DIR__ . '/controllers/',
-            'Dc\Lib' => __DIR__ . '/../../library/',
         ]);
 
         $loader->registerDirs([
@@ -43,13 +42,13 @@ class Module implements ModuleDefinitionInterface
     {
         //加载对应模块下的配置
         $config = $di->get('config');
-        $moduleConfig = ConfigLoader::loadDir(IS_DEV ?__DIR__.'/config/dev/': __DIR__.'/config/');
-        $config->merge($moduleConfig);
-        !IS_DEV || IS_DEV=='dev' ?: $config->merge(ConfigLoader::loadDir(__DIR__.'/config/'.IS_DEV.'/'));
-
         $di->set('config',function() use($config){
+            $config = Helper::loadDir(IS_DEV ?__DIR__.'/config/dev/': __DIR__.'/config/',$config);
+            if(IS_DEV !== false && IS_DEV != 'dev'){
+                $config = Helper::loadDir(__DIR__.'/config/'.IS_DEV.'/',$config);
+            }
             return $config;
-        },true);
+        });
 
         //注入微信应用的实例
         $di->set('wechat',function() use($config){
@@ -58,12 +57,5 @@ class Module implements ModuleDefinitionInterface
             return $wechat;
         },true);
 
-        $di->set('view',function(){
-
-            $view = new View();
-            $view->setViewsDir(__DIR__ . '/views/');
-
-            return $view;
-        });
     }
 }

@@ -219,7 +219,7 @@ class ServerController extends Controller {
     public function defaultReplay($message){
         $list = [
             [
-                'title' =>  $this->user->get($message->FromUserName)->nickname. '，你的现金红包到了，点击领取',
+                'title' =>  $this->wechat->user->get($message->FromUserName)->nickname. '，你的现金红包到了，点击领取',
                 'url'   =>  'http://duocai.cn/m/wxmp/red',
                 'image' =>  'http://photo.res.ehuanxin.com/ehx/M00/00/0A/wKgBBFcfS1KAaFY0AAP-u-Y8Gr8622.jpg'
             ],
@@ -718,47 +718,63 @@ class ServerController extends Controller {
     }
 
     /**
+     * @param array $scopes
+     *
+     * @return mixed
+     */
+    public function getUserByOauth($scopes = ['snsapi_base']){
+        if ($this->request->has('state') && $this->request->has('code')) {
+            return $this->wechat->oauth->user();
+        }
+
+        return $this->wechat->oauth->scopes($scopes)->redirect($this->request->getScheme().'://' . $this->request->getHttpHost() . $this->request->getURI());
+    }
+
+    /**
      * 微信拼团活动
      *
      */
     public function shareCampaignAction()
     {
-        $userData = $this->authGetUserInfo('snsapi_userinfo');
-        $this->oauth->redirect();
-        $uri = '';
-        if (!empty($userData)) {
-            $openIdSource = $this->request->get('openIdSource', 'string', '');
+//        $userData = $this->authGetUserInfo('snsapi_userinfo');
 
-            if ($openIdSource != '') {
-                $uri .= '&openIdSource=' . $openIdSource;
-            }
+//        print_r($userData);
+        die();
 
-            //查询是否已经参过团
-            $wxUser = \WxUserSource::findFirst("openId = '{$userData['openid']}' and source ='微信拼团-WX' and delFlag = 0");
-            if (empty($wxUser)) {
-                //查询是否要参加别人的拼团
-                $userSource = \WxUserSource::findFirst("openId = '{$openIdSource}' and source ='微信拼团-WX' and address = '' and delFlag = 0");
-
-                $newUser = new \WxUserSource();
-                $newUser->openId = $userData['openid'];
-                $newUser->status = 1;
-                $newUser->source = '微信拼团-WX';
-                $newUser->createTime = date('Y-m-d H:i:s');
-                $newUser->remark = json_encode(['nickname' => $userData['nickname'], 'headimgurl' => $userData['headimgurl']]);
-                //参加已经有的拼团
-                if (!empty($userSource)) {
-                    $newUser->address = $userSource->openId;
-                }
-
-                if ($newUser->save() == false) {
-                    die('出错了,请重试！');
-                }
-            }
-            $uri .= '&uid=' . $userData['openid'];
-        }
-
-        $url = 'http://duocai.cn/m/order/acti?campaignId=29' . $uri;
-        $this->response->redirect($url);
-        $this->view->disable();
+//        $uri = '';
+//        if (!empty($userData)) {
+//            $openIdSource = $this->request->get('openIdSource', 'string', '');
+//
+//            if ($openIdSource != '') {
+//                $uri .= '&openIdSource=' . $openIdSource;
+//            }
+//
+//            //查询是否已经参过团
+//            $wxUser = \WxUserSource::findFirst("openId = '{$userData['openid']}' and source ='微信拼团-WX' and delFlag = 0");
+//            if (empty($wxUser)) {
+//                //查询是否要参加别人的拼团
+//                $userSource = \WxUserSource::findFirst("openId = '{$openIdSource}' and source ='微信拼团-WX' and address = '' and delFlag = 0");
+//
+//                $newUser = new \WxUserSource();
+//                $newUser->openId = $userData['openid'];
+//                $newUser->status = 1;
+//                $newUser->source = '微信拼团-WX';
+//                $newUser->createTime = date('Y-m-d H:i:s');
+//                $newUser->remark = json_encode(['nickname' => $userData['nickname'], 'headimgurl' => $userData['headimgurl']]);
+//                //参加已经有的拼团
+//                if (!empty($userSource)) {
+//                    $newUser->address = $userSource->openId;
+//                }
+//
+//                if ($newUser->save() == false) {
+//                    die('出错了,请重试！');
+//                }
+//            }
+//            $uri .= '&uid=' . $userData['openid'];
+//        }
+//
+//        $url = 'http://duocai.cn/m/order/acti?campaignId=29' . $uri;
+//        $this->response->redirect($url);
+//        $this->view->disable();
     }
 }

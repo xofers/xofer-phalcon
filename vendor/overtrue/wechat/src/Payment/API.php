@@ -81,8 +81,6 @@ class API extends AbstractAPI
      */
     public function pay(Order $order)
     {
-        $order->notify_url = $order->get('notify_url', $this->merchant->notify_url);
-
         return $this->request(self::API_PAY_ORDER, $order->all());
     }
 
@@ -327,7 +325,7 @@ class API extends AbstractAPI
             'return_code' => $returnCode,
             'return_msg' => null,
             'result_code' => $resultCode,
-            'user_ip' => $_SERVER['SERVER_ADDR'],
+            'user_ip' => get_client_ip(),
             'time' => time(),
         ], $other);
 
@@ -381,10 +379,13 @@ class API extends AbstractAPI
      */
     protected function request($api, array $params, $method = 'post', array $options = [], $returnResponse = false)
     {
+        $params = array_merge($params, $this->merchant->only(['sub_appid', 'sub_mch_id']));
+
         $params['appid'] = $this->merchant->app_id;
         $params['mch_id'] = $this->merchant->merchant_id;
         $params['device_info'] = $this->merchant->device_info;
         $params['nonce_str'] = uniqid();
+        $params = array_filter($params);
         $params['sign'] = generate_sign($params, $this->merchant->key, 'md5');
 
         $options = array_merge([

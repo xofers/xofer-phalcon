@@ -40,7 +40,7 @@ class API extends AbstractAPI
 
     // api
     const API_SEND = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
-    const API_QUERY = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo ';
+    const API_QUERY = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo';
 
     /**
      * API constructor.
@@ -121,6 +121,7 @@ class API extends AbstractAPI
      */
     protected function request($api, array $params, $method = 'post')
     {
+        $params = array_filter($params);
         $params['nonce_str'] = uniqid();
         $params['sign'] = \EasyWeChat\Payment\generate_sign($params, $this->merchant->key, 'md5');
 
