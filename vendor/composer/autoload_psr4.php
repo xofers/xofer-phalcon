@@ -23,5 +23,6 @@ return array(
     'EasyWeChat\\' => array($vendorDir . '/overtrue/wechat/src'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'DebugBar\\' => array($vendorDir . '/maximebf/debugbar/src/DebugBar'),
+    'Dc\\Lib\\' => array($baseDir . '/library'),
     'Danzabar\\CLI\\' => array($vendorDir . '/danzabar/phalcon-cli/src'),
 );

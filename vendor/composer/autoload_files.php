@@ -14,4 +14,5 @@ return array(
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     '9e090711773bfc38738f5dbaee5a7f14' => $vendorDir . '/overtrue/wechat/src/Payment/helpers.php',
     '10463a2818cfd6b68dd4d9afc0e67845' => $vendorDir . '/snowair/phalcon-debugbar/src/Debug.php',
+    '2fc62601a2d2ebe7132085db9b871606' => $baseDir . '/library/Helper.php',
 );

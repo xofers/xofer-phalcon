@@ -1,5 +1,5 @@
 <?php
-define('APP_DEBUG', true);
+define('APP_DEBUG', false);
 define('APP_NAME', '多彩换新');
 define('APP_PATH', realpath('..'));
 define('ROOT_PATH', __DIR__.DIRECTORY_SEPARATOR);

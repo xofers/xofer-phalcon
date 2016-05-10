@@ -17,38 +17,19 @@ use Phalcon\DI\FactoryDefault;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
-/**
- * 创建依赖注入器
- */
 $di = new FactoryDefault();
-
-/**
- * 注入注册器
- */
-$di->set('register',function(){
-    $loader = new Loader();
-
-    $loader->registerNamespaces([
-        'Dc\Lib' => APP_PATH.'/library/'
-    ]);
-    $loader->register();
-
-    return $loader;
-});
-
-$register = $di->get('register');
 
 /**
  * 注入配置
  */
-$di->set('config',function(){
+$di->set('config', function () {
 
-    $configDir = APP_PATH.'/config/';
-    $configDir .= IS_DEV ?'dev/': '';
+    $configDir = APP_PATH . '/config/';
+    $configDir .= IS_DEV ? 'dev/' : '';
 
-    $config = \Dc\Lib\Helper::loadDir($configDir);
-    if(IS_DEV !== false && IS_DEV != 'dev'){
-        $config = \Dc\Lib\Helper::loadDir(APP_PATH.'/config/'.IS_DEV.'/',$config);
+    $config = loadDir($configDir);
+    if (IS_DEV !== false && IS_DEV != 'dev') {
+        $config = loadDir(APP_PATH . '/config/' . IS_DEV . '/', $config);
     }
 
     return $config;
@@ -59,7 +40,7 @@ $config = $di->get('config');
 /**
  * 注入调试模块
  */
-$di->setShared('debug',function(){
+$di->setShared('debug', function () {
     $debugbar = new \Snowair\Debugbar\ServiceProvider(\Phalcon\Di::getDefault()->get('config')->debugbar);
     return $debugbar;
 });
@@ -67,9 +48,12 @@ $di->setShared('debug',function(){
 /**
  * 注入应用
  */
-$di->setShared('app',function() use ($di,$config){
+$di->setShared('app', function () use (
+    $di,
+    $config
+) {
     $application = new Application($di);
-    $application->registerModules(\Dc\Lib\Helper::loadFile(APP_PATH.'/apps/modules.php')->toArray());
+    $application->registerModules(loadFile(APP_PATH . '/apps/modules.php')->toArray());
 
     $eventsManager = new EventsManager();
     $application->setEventsManager($eventsManager);
@@ -80,26 +64,50 @@ $di->setShared('app',function() use ($di,$config){
 /**
  * 注入路由
  */
-$di->set('router',function(){
+$di->set('router', function () {
 
     $router = new Router(false);
     $router->setDefaultModule('welcome');
 
     //设置模块的默认路由
-    $module = array_flip(array_keys(\Dc\Lib\Helper::loadFile(APP_PATH.'/apps/modules.php')->toArray()));
+    $module = array_flip(array_keys(loadFile(APP_PATH . '/apps/modules.php')->toArray()));
 
-    array_walk($module,function($val,$key,$router){
-        $router->add('/'.$key,['controller'=> 'index','action' => 'index', 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
-        $router->add('/'.$key.'/:controller',['controller'=> 1,'action' => 'index','module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
-        $router->add('/'.$key.'/:controller/:action',['controller'=> 1,'action' => 2, 'module'=>$key,'namespace'=>'Dc\\'.ucfirst($key).'\Controllers']);
-    },$router);
+    array_walk($module, function ($val, $key, $router) {
+        $router->add(
+            "/{$key}",
+            [
+                'controller' => 'index',
+                'action' => 'index',
+                'module' => $key,
+                'namespace' => 'Dc\\' . ucfirst($key) . '\Controllers'
+            ]
+        );
+        $router->add(
+            "/{$key}/:controller",
+            [
+                'controller' => 1,
+                'action' => 'index',
+                'module' => $key,
+                'namespace' => 'Dc\\' . ucfirst($key) . '\Controllers'
+            ]
+        );
+        $router->add(
+            "/{$key}/:controller/:action",
+            [
+                'controller' => 1,
+                'action' => 2,
+                'module' => $key,
+                'namespace' => 'Dc\\' . ucfirst($key) . '\Controllers'
+            ]
+        );
+    }, $router);
 
     //设置自定义路由
-    $myRouters = \Dc\Lib\Helper::loadFile(APP_PATH.'/apps/routers.php')->toArray();
-    if(!empty($myRouters)){
-        array_walk($myRouters,function($val,$key,$router){
-            $router->add($key,$val);
-        },$router);
+    $myRouters = loadFile(APP_PATH . '/apps/routers.php')->toArray();
+    if (!empty($myRouters)) {
+        array_walk($myRouters, function ($val, $key, $router) {
+            $router->add($key, $val);
+        }, $router);
     }
 
     //处理结尾额外的斜杆
@@ -111,15 +119,14 @@ $di->set('router',function(){
 /**
  * 注入调度器
  */
-$di->set('dispatcher',function () use ($config) {
+$di->set('dispatcher', function () use ($config) {
 
-    $dispatcher     = new Dispatcher();
-    $eventsManager  = new EventsManager();
+    $dispatcher = new Dispatcher();
+    $eventsManager = new EventsManager();
 
     $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
-        define("MODULE_NAME",$dispatcher->getModuleName());
-        define("ACTION_NAME",$dispatcher->getActionName());
-
+        define("MODULE_NAME", $dispatcher->getModuleName());
+        define("ACTION_NAME", $dispatcher->getActionName());
     });
 
     $dispatcher->setEventsManager($eventsManager);
@@ -131,11 +138,11 @@ $di->set('dispatcher',function () use ($config) {
 /**
  * 注入日志系统
  */
-$di->set('logger',function () use($config) {
+$di->set('logger', function () use ($config) {
 
     $logger = new Monolog\Logger(MODULE_NAME);
-    $config->log->file = str_replace('MODULE_NAME',MODULE_NAME,$config->log->file);
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file,$config->log->level));
+    $config->log->file = str_replace('MODULE_NAME', MODULE_NAME, $config->log->file);
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file, $config->log->level));
 
     return $logger;
 });
@@ -143,7 +150,7 @@ $di->set('logger',function () use($config) {
 /**
  * 注入视图系统
  */
-$di->set('view',function () {
+$di->set('view', function () {
     $view = new View();
 
     return $view;
@@ -152,23 +159,30 @@ $di->set('view',function () {
 /**
  * 注入数据库系统-写
  */
-$di->setShared('dbWrite', function() use ($config) {
+$di->setShared('dbWrite', function () use ($config) {
     return new DbAdapter($config->db_w->toArray());
 });
 
 /**
  * 注入数据库系统-读
  */
-$di->setShared('dbRead', function() use ($config) {
+$di->setShared('dbRead', function () use ($config) {
     return new DbAdapter($config->db_r->toArray());
 });
 
 /**
  * 注入session
  */
-$di->set('redisSession', function() use ($config) {
-    $session = new Predis\Client($config->redis->toArray(), ['replication' => true,'prefix' => '_DCWX_SESSIONS_'.strtoupper(MODULE_NAME).'_']);
-    $handler = new Predis\Session\Handler($session,['gc_maxlifetime'=>86400]);
+$di->set('redisSession', function () use ($config) {
+    $session = new Predis\Client(
+        $config->redis->toArray(),
+        [
+            'replication' => true,
+
+            'prefix' => '_DCWX_SESSIONS_' . strtoupper(MODULE_NAME) . '_'
+        ]
+    );
+    $handler = new Predis\Session\Handler($session, ['gc_maxlifetime' => 86400]);
     $handler->register();
 
     return $session;
@@ -178,5 +192,12 @@ $di->set('redisSession', function() use ($config) {
  * 注入缓存系统
  */
 $di->set('cache', function () use ($config) {
-    return new Predis\Client($config->redis->toArray(), ['replication' => true,'prefix' => '_DCWX_CACHE_'.strtoupper(MODULE_NAME).'_']);
+    return new Predis\Client(
+        $config->redis->toArray(),
+        [
+            'replication' => true,
+
+            'prefix' => '_DCWX_CACHE_' . strtoupper(MODULE_NAME) . '_'
+        ]
+    );
 });

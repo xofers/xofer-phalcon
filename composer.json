@@ -6,6 +6,13 @@
         "predis/predis": "^1.0",
         "snowair/phalcon-debugbar": "^1.1"
     },
-    "require-dev": {
+    "autoload": {
+        "psr-4": {
+            "Dc\\Lib\\": "library/"
+        },
+        "files": [
+            "library/Helper.php"
+        ]
     }
+
 }

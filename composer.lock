@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2666d36a8c94c2740c23ca092231d8b3",
-    "content-hash": "982cc2017f33600d7cad83fb6432b3d9",
+    "hash": "2d21aab25c44b1a6a355424f152eee9d",
+    "content-hash": "e95ab7452860d8bab7c360466cdaa7ac",
     "packages": [
         {
             "name": "danzabar/phalcon-cli",

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dc\Wechat;
+namespace Dc\Activity;
 
 use Predis;
 use Phalcon\Di;
@@ -8,8 +8,6 @@ use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;
 use Phalcon\DiInterface;
-use Doctrine\Common\Cache\PredisCache;
-use EasyWeChat\Foundation\Application;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 
 class Module implements ModuleDefinitionInterface
@@ -24,7 +22,7 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'Dc\Wechat\Controllers' => __DIR__ . '/controllers/',
+            'Dc\Activity\Controllers' => __DIR__ . '/controllers/',
         ]);
 
         $loader->registerDirs([
@@ -51,15 +49,5 @@ class Module implements ModuleDefinitionInterface
             return $config;
         });
         $config = $di->get('config');
-
-        //注入微信应用的实例
-        $di->set('wechat', function () use ($di, $config) {
-            $wechat = new Application($config->wechat->toArray());
-
-            //设置微信缓存
-            $wechat->cache = new PredisCache($di->get('cache'));
-
-            return $wechat;
-        }, true);
     }
 }
