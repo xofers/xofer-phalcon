@@ -15,6 +15,7 @@ use Phalcon\Mvc\Controller;
 class IndexController extends Controller {
 
     public function indexAction() {
+        echo 'aa';
 //        print_r($this->cache->keys('*'));
 //        $this->cache->set('fff','assda');
 //        console($this->cache);

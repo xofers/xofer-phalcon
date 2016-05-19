@@ -2,11 +2,11 @@
 
 namespace Dc\Lib\Support;
 
-use Dc\Lib\Traits\MacroableTrait;
+use Dc\Lib\Traits\Macroable;
 
 class Str
 {
-    use MacroableTrait;
+    use Macroable;
 
     /**
      * The cache of snake-cased words.

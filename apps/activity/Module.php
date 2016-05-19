@@ -2,13 +2,10 @@
 
 namespace Dc\Activity;
 
-use Predis;
-use Phalcon\Di;
 use Phalcon\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Router;
 use Phalcon\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Mvc\View;
 
 class Module implements ModuleDefinitionInterface
 {
@@ -23,11 +20,9 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces([
             'Dc\Activity\Controllers' => __DIR__ . '/controllers/',
+            'Dc\Activity\Models' => __DIR__ . '/models/',
+            'Dc\Activity\Repositories' => __DIR__ . '/repositories/'
         ]);
-
-        $loader->registerDirs([
-            __DIR__ . '/model/'
-        ], true);
 
         $loader->register();
     }
@@ -49,5 +44,12 @@ class Module implements ModuleDefinitionInterface
             return $config;
         });
         $config = $di->get('config');
+
+        $di->set('view', function () {
+            $view = new View();
+            $view->setViewsDir(__DIR__.'/views/');
+
+            return $view;
+        });
     }
 }

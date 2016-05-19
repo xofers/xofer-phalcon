@@ -18,4 +18,8 @@ class DispatcherEvent
 
     }
 
+    public function beforeExecuteRoute(){
+
+    }
+
 }

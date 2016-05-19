@@ -8,13 +8,11 @@
  *
  */
 
-namespace Dc\Activity\Models\Repositories\Repository;
+namespace Dc\Activity\Models;
 
 use Dc\Lib\Traits\Singleton;
 
 trait Base
 {
     use Singleton;
-
-    
 }

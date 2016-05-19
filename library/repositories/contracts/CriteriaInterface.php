@@ -1,14 +1,12 @@
 <?php
+
 namespace Dc\Lib\Repositories\Contracts;
 
 /**
- * Interface RepositoryInterface
+ * Interface CriteriaInterface
  * @package Dc\Lib\Repositories\Contracts
  */
-interface RepositoryInterface
+interface CriteriaInterface
 {
-    /**
-     * @return mixed
-     */
-    public function query();
+    
 }

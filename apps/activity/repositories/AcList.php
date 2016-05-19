@@ -13,7 +13,7 @@ namespace Dc\Activity\Repositories;
 use Dc\Lib\Repositories\Eloquent\Repository;
 use Dc\Lib\Repositories\Criteria\Criteria;
 
-class  extends Repository
+class AcList extends Repository
 {
     use Base;
 

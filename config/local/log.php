@@ -15,7 +15,7 @@ return  [
 
         'level' =>  \Monolog\Logger::DEBUG,
 
-        'file'  =>  APP_PATH.'/.storage/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'.log',
+        'file'  =>  APP_PATH.'/.storage/MODULE_NAME/'.date('Ym').'/'.date('Ymd').'-TYPE'.'.log',
 
     ],
 

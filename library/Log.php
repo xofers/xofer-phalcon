@@ -27,11 +27,13 @@ class Log
     /**
      * Return the logger instance.
      *
+     * @param string $fileType
+     *
      * @return \Psr\Log\LoggerInterface
      */
-    public static function getLogger()
+    public static function getLogger($fileType = '')
     {
-        return self::$logger ?: self::$logger = self::createDefaultLogger();
+        return self::$logger ?: self::$logger = self::createDefaultLogger($fileType);
     }
 
     /**
@@ -57,13 +59,15 @@ class Log
     /**
      * Make a default log instance.
      *
+     * @param string $fileType
+     *
      * @return \Monolog\Logger
      */
-    private static function createDefaultLogger()
+    private static function createDefaultLogger($fileType = '')
     {
-        $logger = Di::getDefault()->get("logger");
+        $logger = Di::getDefault()->get("logger",['fileType'=>$fileType]);
 
-        if($logger instanceof LoggerInterface){
+        if ($logger instanceof LoggerInterface) {
             return self::$logger = $logger;
         }
 
@@ -80,8 +84,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function emergency($message, array $context = array()){
-        self::getLogger()->emergency($message,$context);
+    public static function emergency($message, array $context = array())
+    {
+        self::getLogger('emergency')->emergency($message, $context);
     }
 
     /**
@@ -94,8 +99,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function alert($message, array $context = array()){
-        self::getLogger()->alert($message,$context);
+    public static function alert($message, array $context = array())
+    {
+        self::getLogger('alert')->alert($message, $context);
     }
 
     /**
@@ -107,8 +113,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function critical($message, array $context = array()){
-        self::getLogger()->critical($message,$context);
+    public static function critical($message, array $context = array())
+    {
+        self::getLogger('critical')->critical($message, $context);
     }
 
     /**
@@ -119,8 +126,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function error($message, array $context = array()){
-        self::getLogger()->error($message,$context);
+    public static function error($message, array $context = array())
+    {
+        self::getLogger('error')->error($message, $context);
     }
 
     /**
@@ -133,8 +141,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function warning($message, array $context = array()){
-        self::getLogger()->warning($message,$context);
+    public static function warning($message, array $context = array())
+    {
+        self::getLogger('warning')->warning($message, $context);
     }
 
     /**
@@ -144,8 +153,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function notice($message, array $context = array()){
-        self::getLogger()->notice($message,$context);
+    public static function notice($message, array $context = array())
+    {
+        self::getLogger('notice')->notice($message, $context);
     }
 
     /**
@@ -157,8 +167,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function info($message, array $context = array()){
-        self::getLogger()->info($message,$context);
+    public static function info($message, array $context = array())
+    {
+        self::getLogger('info')->info($message, $context);
     }
 
     /**
@@ -168,8 +179,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function debug($message, array $context = array()){
-        self::getLogger()->debug($message,$context);
+    public static function debug($message, array $context = array())
+    {
+        self::getLogger('debug')->debug($message, $context);
     }
 
     /**
@@ -180,8 +192,9 @@ class Log
      * @param array $context
      * @return null
      */
-    public static function log($level, $message, array $context = array()){
-        self::getLogger()->log($level, $message,$context);
+    public static function log($level, $message, array $context = array())
+    {
+        self::getLogger($level)->log($level, $message, $context);
     }
 
 }

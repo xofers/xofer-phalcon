@@ -4,12 +4,14 @@
         "phalcon/incubator": "^2.0",
         "danzabar/phalcon-cli": "^1.0",
         "predis/predis": "^1.0",
-        "snowair/phalcon-debugbar": "dev-master",
-        "rootwork/phalcon-jwt": "dev-master"
+        "rootwork/phalcon-jwt": "dev-master",
+        "symfony/var-dumper": "^3.0",
+        "php-console/php-console": "~3.0"
     },
     "autoload": {
         "psr-4": {
-            "Dc\\Lib\\": "library/"
+            "Dc\\Lib\\": "library/",
+            "Dc\\Lib\\Repositories": "library/repositories"
         },
         "files": [
             "library/Helper.php"

@@ -11,7 +11,6 @@ return array(
     'Symfony\\Component\\Process\\' => array($vendorDir . '/symfony/process'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Symfony\\Bridge\\PsrHttpMessage\\' => array($vendorDir . '/symfony/psr-http-message-bridge'),
-    'Snowair\\Debugbar\\' => array($vendorDir . '/snowair/phalcon-debugbar/src'),
     'Rootwork\\Phalcon\\' => array($vendorDir . '/rootwork/phalcon-jwt/src/Phalcon'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Predis\\' => array($vendorDir . '/predis/predis/src'),
@@ -24,7 +23,6 @@ return array(
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'EasyWeChat\\' => array($vendorDir . '/overtrue/wechat/src'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
-    'DebugBar\\' => array($vendorDir . '/maximebf/debugbar/src/DebugBar'),
     'Dc\\Lib\\' => array($baseDir . '/library'),
     'Danzabar\\CLI\\' => array($vendorDir . '/danzabar/phalcon-cli/src'),
 );

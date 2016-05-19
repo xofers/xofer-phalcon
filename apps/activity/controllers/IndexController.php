@@ -7,16 +7,22 @@
  * @datetime    :2016-3-28
  */
 
-namespace Dc\Ac\Controllers;
+namespace Dc\Activity\Controllers;
 
-use Dc\Lib\Log;
 use Phalcon\Mvc\Controller;
+use Dc\Activity\Repositories\Activity as AcList;
 
-class IndexController extends Controller {
+class IndexController extends Controller
+{
 
-    public function indexAction() {
-//        print_r($this->cache->keys('*'));
-//        $this->cache->set('fff','assda');
-//        console($this->cache);
+    public function indexAction()
+    {
+        $id = $this->dispatcher->getParam('id', 'int', '');
+        if (empty($id)) {
+//            throw new Dispa
+        }
+//        $activity = AcList::instance()->findFirstById($id);
+
+//        return $this->view->pick('404');
     }
 }

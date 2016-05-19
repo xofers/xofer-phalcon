@@ -88,7 +88,7 @@ if (!function_exists('console')) {
         array_map(function ($x) {
 
             if (class_exists(\Symfony\Component\VarDumper\Dumper\CliDumper::class)) {
-                $dumper = 'cli' === PHP_SAPI ? new Symfony\Component\VarDumper\Dumper\CliDumper : new Symfony\Component\VarDumper\Dumper\HtmlDumper;
+                $dumper = 'cli' === PHP_SAPI ? new \Symfony\Component\VarDumper\Dumper\CliDumper : new Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
                 $dumper->dump((new \Symfony\Component\VarDumper\Cloner\VarCloner)->cloneVar($x));
             } else {

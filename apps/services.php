@@ -20,7 +20,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 $di = new FactoryDefault();
 
 /**
- * 注入配置
+ * 配置
  */
 $di->set('config', function () {
 
@@ -38,21 +38,14 @@ $di->set('config', function () {
 $config = $di->get('config');
 
 /**
- * 注入调试模块
- */
-$di->setShared('debug', function () {
-    $debugbar = new \Snowair\Debugbar\ServiceProvider(\Phalcon\Di::getDefault()->get('config')->debugbar);
-    return $debugbar;
-});
-
-/**
- * 注入应用
+ * 应用
  */
 $di->setShared('app', function () use (
     $di,
     $config
 ) {
     $application = new Application($di);
+    $application->useImplicitView(false);
     $application->registerModules(loadFile(APP_PATH . '/apps/modules.php')->toArray());
 
     $eventsManager = new EventsManager();
@@ -62,7 +55,7 @@ $di->setShared('app', function () use (
 });
 
 /**
- * 注入路由
+ * 路由
  */
 $di->set('router', function () {
 
@@ -116,62 +109,83 @@ $di->set('router', function () {
     return $router;
 });
 
+///**
+// * 调度器
+// */
+//$di->set('dispatcher', function () use ($config) {
+//
+//    $dispatcher = new Dispatcher();
+//    $dispatcher->setDefaultNamespace('Dc\\Welcome\\Controllers');
+//
+//    $eventsManager = new EventsManager();
+////    $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
+////        define("MODULE_NAME", $dispatcher->getModuleName());
+////        define("ACTION_NAME", $dispatcher->getActionName());
+////    });
+//    $eventsManager->attach('dispatch',new Dc\Welcome\Event\DispatcherEvent());
+//    $dispatcher->setEventsManager($eventsManager);
+//
+//    return $dispatcher;
+//});
+
 /**
- * 注入调度器
+ * 日志系统
  */
-$di->set('dispatcher', function () use ($config) {
-
-    $dispatcher = new Dispatcher();
-    $eventsManager = new EventsManager();
-
-    $eventsManager->attach("dispatch:beforeExecuteRoute", function ($event, $dispatcher, $exception) use ($config) {
-        define("MODULE_NAME", $dispatcher->getModuleName());
-        define("ACTION_NAME", $dispatcher->getActionName());
-    });
-
-    $dispatcher->setEventsManager($eventsManager);
-    $dispatcher->setDefaultNamespace("Dc\Welcome\Controllers");
-
-    return $dispatcher;
-});
-
-/**
- * 注入日志系统
- */
-$di->set('logger', function () use ($config) {
-
+$di->set('logger', function ($fileType = '') use ($config) {
     $logger = new Monolog\Logger(MODULE_NAME);
     $config->log->file = str_replace('MODULE_NAME', MODULE_NAME, $config->log->file);
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file, $config->log->level));
+    $config->log->file = str_replace('TYPE', strtoupper($fileType), $config->log->file);
 
+    if (IS_DEV) {
+        $logger->pushHandler(new Monolog\Handler\PHPConsoleHandler());
+    }
+
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($config->log->file, $config->log->level));
     return $logger;
 });
 
 /**
- * 注入视图系统
- */
-$di->set('view', function () {
-    $view = new View();
-
-    return $view;
-});
-
-/**
- * 注入数据库系统-写
+ * 数据库系统-写
  */
 $di->setShared('dbWrite', function () use ($config) {
-    return new DbAdapter($config->db_w->toArray());
+    $connection = new DbAdapter($config->db_w->toArray());
+
+    if (IS_DEV && IS_DEV != 'dev') {
+        $eventsManager = new EventsManager();
+
+        $eventsManager->attach('db', function ($event, $connection) {
+            if ($event->getType() == 'beforeQuery') {
+                \Dc\Lib\Log::info($connection->getSqlStatement());
+            }
+        });
+        $connection->setEventsManager($eventsManager);
+    }
+
+    return $connection;
 });
 
 /**
- * 注入数据库系统-读
+ * 数据库系统-读
  */
 $di->setShared('dbRead', function () use ($config) {
-    return new DbAdapter($config->db_r->toArray());
+    $connection = new DbAdapter($config->db_r->toArray());
+
+    if (IS_DEV && IS_DEV != 'dev') {
+        $eventsManager = new EventsManager();
+
+        $eventsManager->attach('db', function ($event, $connection) {
+            if ($event->getType() == 'beforeQuery') {
+                \Dc\Lib\Log::info($connection->getSqlStatement());
+            }
+        });
+        $connection->setEventsManager($eventsManager);
+    }
+
+    return $connection;
 });
 
 /**
- * 注入session
+ * session
  */
 $di->set('redisSession', function () use ($config) {
     $session = new Predis\Client(
@@ -189,7 +203,7 @@ $di->set('redisSession', function () use ($config) {
 });
 
 /**
- * 注入缓存系统
+ * 缓存系统
  */
 $di->set('cache', function () use ($config) {
     return new Predis\Client(

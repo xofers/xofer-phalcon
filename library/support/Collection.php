@@ -9,7 +9,7 @@ use CachingIterator;
 use JsonSerializable;
 use IteratorAggregate;
 use InvalidArgumentException;
-use Dc\Lib\Traits\MacroableTrait;
+use Dc\Lib\Traits\Macroable;
 
 interface Jsonable{
     /**
@@ -33,7 +33,7 @@ interface Arrayable
 
 class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate, Jsonable, JsonSerializable
 {
-    use MacroableTrait;
+    use Macroable;
 
     /**
      * The items contained in the collection.

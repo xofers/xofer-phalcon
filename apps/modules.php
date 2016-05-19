@@ -17,5 +17,10 @@ return [
     'wechat' => [
         'className' => 'Dc\Wechat\Module',
         'path' => __DIR__ . '/../apps/wechat/Module.php'
+    ],
+
+    'activity' => [
+        'className' => 'Dc\Activity\Module',
+        'path' => __DIR__ . '/../apps/activity/Module.php'
     ]
 ];

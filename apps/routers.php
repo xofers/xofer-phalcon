@@ -20,4 +20,11 @@ return [
  *  ]
  */
 
+//    '/activity/([0-9]+)' =>  [
+//        'module' => 'activity',
+//        'namespace' => 'Dc\Activity\Controllers',
+//        'controller' => 'index',
+//        'action' => 'index',
+//        'id'    =>  1
+//    ]
 ];
