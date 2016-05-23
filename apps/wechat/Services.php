@@ -7,7 +7,7 @@
  * @datetime    :2016/5/20 0020 1:45
  *
  */
-namespace App\Activity\Services;
+namespace App\Wechat\Services;
 
 return [
 

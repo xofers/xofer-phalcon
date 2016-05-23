@@ -12,10 +12,11 @@ namespace Dc\Modules\Services;
 
 use Monolog\Logger as MonologLogger;
 use Monolog\Handler;
+use PhpConsole;
 
 class Logger extends MonologLogger
 {
-    public function __construct(Config $config = null,$fileType = null)
+    public function __construct(Config $config = null, $fileType = null)
     {
         parent::__construct(MODULE_NAME);
 
@@ -23,7 +24,7 @@ class Logger extends MonologLogger
 
         $this->pushHandler(new Handler\StreamHandler($config->log->file, $config->log->level));
 
-        if (IS_DEV) {
+        if (IS_DEV && !empty($config->debug) && $config->debug->start) {
             $this->pushHandler(new Handler\PHPConsoleHandler());
         }
     }

@@ -8,13 +8,16 @@
  *
  */
 
+namespace Dc\Modules\Services;
+
+
 return [
     'config' => [
-        'className' => Dc\Modules\Services\Config::class,
+        'className' => Config::class,
     ],
 
     'router' => [
-        'className' => Dc\Modules\Services\Router::class,
+        'className' => Router::class,
         'arguments' => [
             [
                 'type' => 'parameter',
@@ -28,7 +31,7 @@ return [
     ],
 
     'dbWrite' => [
-        'className' => Dc\Modules\Services\Mysql::class,
+        'className' => Mysql::class,
         'arguments' => [
             [
                 'type' => 'parameter',
@@ -42,7 +45,7 @@ return [
     ],
 
     'dbRead' => [
-        'className' => Dc\Modules\Services\Mysql::class,
+        'className' => Mysql::class,
         'arguments' => [
             [
                 'type' => 'parameter',
@@ -56,7 +59,7 @@ return [
     ],
 
     'logger' => [
-        'className' => Dc\Modules\Services\Logger::class,
+        'className' => Logger::class,
         'arguments' => [
             [
                 'type' => 'service',
@@ -66,7 +69,7 @@ return [
     ],
 
     'session' => [
-        'className' => Dc\Modules\Services\Session::class,
+        'className' => Session::class,
         'arguments' => [
             [
                 'type' => 'service',
@@ -85,7 +88,7 @@ return [
     ],
 
     'cache' => [
-        'className' => Dc\Modules\Services\Cache::class,
+        'className' => Session::class,
         'arguments' => [
             [
                 'type' => 'service',
@@ -99,6 +102,20 @@ return [
 
                     'prefix' => '_DCWX_CACHE_'
                 ]
+            ]
+        ]
+    ],
+
+    'wechat' => [
+        'className' => Wechat::class,
+        'arguments' => [
+            [
+                'type' => 'service',
+                'name' => 'config',
+            ],
+            [
+                'type' => 'service',
+                'name' => 'cache',
             ]
         ]
     ]

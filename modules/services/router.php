@@ -45,6 +45,7 @@ class Router extends \Phalcon\Mvc\Router
             [
                 'controller' => 1,
                 'action' => 'index',
+                'module' => $module,
                 'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
             ]
         );
@@ -52,6 +53,7 @@ class Router extends \Phalcon\Mvc\Router
             [
                 'controller' => 1,
                 'action' => 2,
+                'module' => $module,
                 'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
             ]
         );
