@@ -18,8 +18,6 @@ class Wechat extends Application
 {
     public function __construct($config = null, $cache = null)
     {
-        \Dc\Lib\Log::info('---',$config->wechat->toArray());
-
         parent::__construct($config->wechat->toArray());
 
         //设置微信缓存

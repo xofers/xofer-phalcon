@@ -20,17 +20,6 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerAutoloaders(DiInterface $di = null)
     {
-        (new Loader())
-            ->registerNamespaces([
-                'Dc\Welcome' => __DIR__
-            ])
-            ->registerDirs([
-
-            ])
-            ->registerClasses([
-
-            ])
-            ->register();
     }
 
     /**
@@ -40,6 +29,6 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerServices(DiInterface $di)
     {
-        $di[''];
+
     }
 }
