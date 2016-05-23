@@ -8,7 +8,6 @@ use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Mvc\Dispatcher;
-use Dc\Welcome\Events;
 use Phalcon\Events\Manager as EventsManager;
 
 class Module implements ModuleDefinitionInterface
@@ -41,18 +40,6 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerServices(DiInterface $di)
     {
-        /**
-         * 调度器
-         */
-        $di->set('dispatcher', function () {
-            $dispatcher = new Dispatcher();
-            $dispatcher->setDefaultNamespace('Dc\\Welcome\\Controllers');
-
-            $eventsManager = new EventsManager();
-            $eventsManager->attach('dispatch', new Events\DispatchEvent());
-            $dispatcher->setEventsManager($eventsManager);
-
-            return $dispatcher;
-        });
+        $di[''];
     }
 }

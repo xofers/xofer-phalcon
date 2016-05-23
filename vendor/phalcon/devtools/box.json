@@ -1,0 +1,34 @@
+{
+  "main": "phalcon.php",
+  "output": "phalcon.phar",
+  "chmod": "0755",
+  "directories": [
+    "resources",
+    "scripts",
+    "templates"
+  ],
+  "files": [
+    "webtools.php",
+    "docs/LICENSE.txt"
+  ],
+  "finder": [
+    {
+      "in": "resources",
+      "name": "*.*"
+    },
+    {
+      "in": "scripts",
+      "name": "*.*"
+    },
+    {
+      "in": "templates",
+      "ignoreDotFiles": false,
+      "name": [
+        "*.*",
+        ".htrouter.php"
+      ]
+    }
+  ],
+  "git-version": "git_tag",
+  "stub": true
+}

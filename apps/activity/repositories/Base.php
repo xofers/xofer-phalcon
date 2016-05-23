@@ -8,7 +8,7 @@
  *
  */
 
-namespace Dc\Activity\Repositories;
+namespace App\Activity\Repositories;
 
 use Dc\Lib\Traits\Singleton;
 

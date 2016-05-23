@@ -15,7 +15,7 @@ return  [
 
         'level' =>  \Monolog\Logger::DEBUG,
 
-        'file'  =>  !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/MODULE_NAME/error/'.date('Ym').'/'.date('Ymd').'-TYPE'.'.log',
+        'file'  =>  !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/'.MODULE_NAME.'/error/'.date('Ym').'/'.date('Ymd').'-TYPE'.'.log',
 
     ],
 

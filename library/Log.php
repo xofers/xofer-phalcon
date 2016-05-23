@@ -65,7 +65,11 @@ class Log
      */
     private static function createDefaultLogger($fileType = '')
     {
-        $logger = Di::getDefault()->get("logger",['fileType'=>$fileType]);
+
+        $logger = Di::getDefault()->getShared("logger", [
+            Di::getDefault()->getShared('config'),
+            $fileType
+        ]);
 
         if ($logger instanceof LoggerInterface) {
             return self::$logger = $logger;
@@ -86,7 +90,7 @@ class Log
      */
     public static function emergency($message, array $context = array())
     {
-        self::getLogger('emergency')->emergency($message, $context);
+        return self::getLogger('emergency')->emergency($message, $context);
     }
 
     /**
@@ -101,7 +105,7 @@ class Log
      */
     public static function alert($message, array $context = array())
     {
-        self::getLogger('alert')->alert($message, $context);
+        return self::getLogger('alert')->alert($message, $context);
     }
 
     /**
@@ -115,7 +119,7 @@ class Log
      */
     public static function critical($message, array $context = array())
     {
-        self::getLogger('critical')->critical($message, $context);
+        return self::getLogger('critical')->critical($message, $context);
     }
 
     /**
@@ -128,7 +132,7 @@ class Log
      */
     public static function error($message, array $context = array())
     {
-        self::getLogger('error')->error($message, $context);
+        return self::getLogger('error')->error($message, $context);
     }
 
     /**
@@ -143,7 +147,7 @@ class Log
      */
     public static function warning($message, array $context = array())
     {
-        self::getLogger('warning')->warning($message, $context);
+        return self::getLogger('warning')->warning($message, $context);
     }
 
     /**
@@ -155,7 +159,7 @@ class Log
      */
     public static function notice($message, array $context = array())
     {
-        self::getLogger('notice')->notice($message, $context);
+        return self::getLogger('notice')->notice($message, $context);
     }
 
     /**
@@ -169,7 +173,7 @@ class Log
      */
     public static function info($message, array $context = array())
     {
-        self::getLogger('info')->info($message, $context);
+        return self::getLogger('info')->info($message, $context);
     }
 
     /**
@@ -181,7 +185,7 @@ class Log
      */
     public static function debug($message, array $context = array())
     {
-        self::getLogger('debug')->debug($message, $context);
+        return self::getLogger('debug')->debug($message, $context);
     }
 
     /**
@@ -194,7 +198,7 @@ class Log
      */
     public static function log($level, $message, array $context = array())
     {
-        self::getLogger($level)->log($level, $message, $context);
+        return self::getLogger($level)->log($level, $message, $context);
     }
 
 }

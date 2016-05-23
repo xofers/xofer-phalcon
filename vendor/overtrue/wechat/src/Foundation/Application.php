@@ -27,6 +27,7 @@ namespace EasyWeChat\Foundation;
 
 use Doctrine\Common\Cache\FilesystemCache;
 use EasyWeChat\Core\AccessToken;
+use EasyWeChat\Core\Http;
 use EasyWeChat\Support\Log;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
@@ -105,7 +106,13 @@ class Application extends Container
         $this->registerBase();
         $this->initializeLogger();
 
-        Log::debug('Current configuration:', $config);
+        Http::setDefaultOptions($this['config']->get('guzzle', ['timeout' => 5.0]));
+
+        foreach (['app_id', 'secret'] as $key) {
+            !isset($config[$key]) || $config[$key] = '***'.substr($config[$key], -5);
+        }
+
+        Log::debug('Current config:', $config);
     }
 
     /**

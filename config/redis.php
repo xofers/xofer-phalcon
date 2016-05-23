@@ -9,25 +9,29 @@
 
 return [
 
-    'redis' =>  [
+    'redis' => [
 
-        [
-            'schame'    => 'tcp',
+        'master' => [
 
-            'host'      => $_SERVER['DC_REDIS_MASTER_HOST'],
+            'schame' => 'tcp',
 
-            'port'      => 6379,
+            'host' => $_SERVER['DC_REDIS_MASTER_HOST'],
 
-            'alias'     => 'master',
+            'port' => 6379,
+
+            'alias' => 'master',
+
         ],
-        [
-            'schame'    => 'tcp',
 
-            'host'      => $_SERVER['DC_REDIS_SLAVE_HOST'],
+        'slave-01' => [
 
-            'port'      => 6379,
+            'schame' => 'tcp',
 
-            'alias'     => 'slave-01',
+            'host' => $_SERVER['DC_REDIS_SLAVE_HOST'],
+
+            'port' => 6379,
+
+            'alias' => 'slave-01',
         ]
 
     ]

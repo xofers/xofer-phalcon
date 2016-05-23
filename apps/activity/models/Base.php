@@ -8,7 +8,7 @@
  *
  */
 
-namespace Dc\Activity\Models;
+namespace App\Activity\Models;
 
 use Dc\Lib\Traits\Singleton;
 

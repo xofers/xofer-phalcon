@@ -7,7 +7,7 @@
  * @datetime    :2016-3-28
  */
 
-namespace Dc\Wechat\Controllers;
+namespace App\Wechat\Controllers;
 
 use Dc\Lib\Log;
 use Phalcon\Mvc\Controller;

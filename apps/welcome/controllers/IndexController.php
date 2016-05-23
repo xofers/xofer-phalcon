@@ -7,7 +7,7 @@
  * @datetime    :2016-3-28
  */
 
-namespace Dc\Welcome\Controllers;
+namespace App\Welcome\Controllers;
 
 use Phalcon\Di;
 use Phalcon\Mvc\Controller;
@@ -15,7 +15,7 @@ use Phalcon\Mvc\Controller;
 class IndexController extends Controller {
 
     public function indexAction() {
-        echo MODULE_NAME;
+        echo 'ddd';
         die();
     }
 }

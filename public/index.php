@@ -8,20 +8,19 @@ define("IS_DEV", isset($_SERVER['DC_ENV']) && in_array($_SERVER['DC_ENV'], ['dev
 require_once '../vendor/autoload.php';
 
 try {
-    //加载服务
-    require_once '../apps/services.php';
 
-    //加载调试工具
-    if (IS_DEV && IS_DEV != 'dev') {
-        $handler = PhpConsole\Handler::getInstance();
-        $connector = PhpConsole\Connector::getInstance();
-        $connector->setPassword('*****');
-        $connector->startEvalRequestsListener();
-        $handler->start();
-    }
+    $application = new Phalcon\Mvc\Application();
 
-    //处理请求
-    echo \Phalcon\Di::getDefault()->get('app')->handle()->getContent();
+    $application->setDI(new Phalcon\Di\FactoryDefault());
+
+    $application->useImplicitView(false);
+
+    $modulesManager = new Dc\Modules\Manager($application);
+
+    $modulesManager->handle();
+
+    echo $application->handle()->getContent();
+
 } catch (\Exception $e) {
 
     echo $e->getMessage(), PHP_EOL;

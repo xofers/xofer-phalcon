@@ -1,5 +1,5 @@
 <?php
-namespace Dc\Activity\Models;
+namespace App\Activity\Models;
 
 use Phalcon\Mvc\Model;
 

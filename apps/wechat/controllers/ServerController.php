@@ -7,9 +7,9 @@
  * @datetime    :2016-3-28
  */
 
-namespace Dc\Wechat\Controllers;
+namespace App\Wechat\Controllers;
 
-use Dc\Lib\Traits\WechatTrait;
+use Dc\Lib\Traits\Wechat;
 use EasyWeChat\Message\News;
 use EasyWeChat\Message\Text;
 use Phalcon\Mvc\Controller;
@@ -17,7 +17,7 @@ use Phalcon\Mvc\Controller;
 class ServerController extends Controller
 {
 
-    use WechatTrait;
+    use Wechat;
 
     /**
      * 服务端验证

@@ -1,0 +1,32 @@
+{
+    "name": "phalcon/devtools",
+    "type": "library",
+    "description": "This tools provide you useful scripts to generate code helping to develop faster and easy applications that use with Phalcon framework.",
+    "keywords": ["framework", "phalcon", "devtools", "webtools", "phar"],
+    "homepage": "http://phalconphp.com",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Phalcon Team",
+            "email": "team@phalconphp.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9",
+        "ext-phalcon": "^2.0"
+    },
+    "require-dev": {
+        "kherge/box": "^2.7"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Phalcon\\" : "scripts/Phalcon/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "bin": ["phalcon.php"]
+}

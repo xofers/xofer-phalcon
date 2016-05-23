@@ -1,6 +1,6 @@
 <?php
 
-namespace Dc\Wechat;
+namespace App\Wechat;
 
 use Predis;
 use Phalcon\Di;
@@ -21,17 +21,6 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerAutoloaders(DiInterface $di = null)
     {
-        $loader = new Loader();
-
-        $loader->registerNamespaces([
-            'Dc\Wechat\Controllers' => __DIR__ . '/controllers/',
-        ]);
-
-        $loader->registerDirs([
-            __DIR__ . '/model/'
-        ], true);
-
-        $loader->register();
     }
 
     /**
