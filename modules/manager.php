@@ -34,6 +34,10 @@ class Manager
 
     }
 
+    public function getApplication(){
+        return $this->app;
+    }
+
     protected function registerEvents()
     {
         $eventManager = new EventsManager();

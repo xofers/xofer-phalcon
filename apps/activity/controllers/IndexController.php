@@ -9,22 +9,11 @@
 
 namespace App\Activity\Controllers;
 
-use Dc\Lib\Log;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller
 {
-    public function indexAction()
-    {
-        Log::alert('fff');
-//        print_r($this->config);
-//        echo $this->dbWrite->getDefaultIdValue();
-//        $id = $this->dispatcher->getParam('id', 'int', '');
-//        if (empty($id)) {
-//            throw new Dispa
-//        }
-//        $activity = AcList::instance()->findFirstById($id);
+    public function showAction(){
 
-//        return $this->view->pick('404');
     }
 }

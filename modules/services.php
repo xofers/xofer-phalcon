@@ -21,10 +21,6 @@ return [
             [
                 'type' => 'parameter',
                 'value' => true
-            ],
-            [
-                'type' => 'parameter',
-                'value' => array_keys(loadFile(__DIR__ . '/modules.php')->toArray())
             ]
         ]
     ],

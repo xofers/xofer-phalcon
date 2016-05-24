@@ -33,7 +33,7 @@ class Module implements ModuleDefinitionInterface
         $services = loadFile(__DIR__ . '/Services.php')->toArray();
 
         array_walk($services, function ($v, $k) use ($di) {
-            $di->setShared($k, $v);
+            $di->set($k, $v);
         });
     }
 }

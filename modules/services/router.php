@@ -16,7 +16,7 @@ use Phalcon\Events\Manager as EventsManager;
 class Router extends \Phalcon\Mvc\Router
 {
 
-    public function __construct($defaultRoutes = true, $modules = [])
+    public function __construct($defaultRoutes = true)
     {
         parent::__construct($defaultRoutes);
 
@@ -26,10 +26,29 @@ class Router extends \Phalcon\Mvc\Router
 
         $this->setDefaultNamespace('App\\Welcome\\Controllers');
 
-        array_map(function ($module) {
-            $this->registerModuleRouter($module);
-        }, $modules);
+        $routers = loadDir(__DIR__ . '/../routers/')->toArray();
 
+        foreach ($routers as $k => $v) {
+
+            //注册模块基础路由
+            $this->registerModuleRouter($k);
+
+            //注册自定义路由
+            foreach ($v as $key => $val) {
+                $httpMethod = empty($val['httpMethod']) ? null : $val['httpMethod'];
+                $position = empty($val['position']) ? \Phalcon\Mvc\Router::POSITION_LAST : $val['position'];
+
+                unset($val['httpMethod']);
+                unset($val['position']);
+
+                $this->add(
+                    $key,
+                    array_merge(['module' => $k, 'namespace' => 'App\\' . ucfirst($k) . '\\Controllers'], $val),
+                    $httpMethod,
+                    $position
+                );
+            }
+        }
 
         $this->removeExtraSlashes(true);
 

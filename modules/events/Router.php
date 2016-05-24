@@ -30,8 +30,9 @@ class Router
      * 检查单个路由之前触发
      *
      * @param Event $event
+     * @param MvcRouter $router
      */
-    public function beforeCheckRoute(Event $event)
+    public function beforeCheckRoute(Event $event, MvcRouter $router)
     {
     }
 
@@ -39,8 +40,9 @@ class Router
      * 匹配路由之后触发
      *
      * @param Event $event
+     * @param MvcRouter $router
      */
-    public function matchedRoute(Event $event)
+    public function matchedRoute(Event $event, MvcRouter $router)
     {
 
     }
@@ -49,8 +51,9 @@ class Router
      * 未匹配路由之后触发
      *
      * @param Event $event
+     * @param MvcRouter $router
      */
-    public function notMatchedRoute(Event $event)
+    public function notMatchedRoute(Event $event, MvcRouter $router)
     {
 
     }

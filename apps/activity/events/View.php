@@ -2,18 +2,18 @@
 
 /**
  *
- * @description :视图事件
+ * @description :视图事件触发类
  * @author      :游川江<youcj@duocai.cn>
  * @copyright   :Copyright © 2016-2017 多彩饰家 www.duocai.cn
  * @datetime    :2016/5/20 0020 1:30
  *
  */
-namespace Dc\Modules\Events;
+namespace App\Activity\Events;
 
 use Phalcon\Events\Event;
 use Phalcon\Mvc\View as MvcView;
 
-class View
+class View extends \Dc\Modules\Events\View
 {
     /**
      * 渲染过程开始前触发(可以停止操作)
@@ -23,6 +23,7 @@ class View
      */
     public function beforeRender(Event $event, MvcView $view)
     {
+        parent::beforeRender($event, $view);
     }
 
     /**
@@ -33,6 +34,7 @@ class View
      */
     public function beforeRenderView(Event $event, MvcView $view)
     {
+        parent::beforeRenderView($event, $view);
     }
 
     /**
@@ -43,6 +45,7 @@ class View
      */
     public function afterRenderView(Event $event, MvcView $view)
     {
+        parent::afterRenderView($event, $view);
     }
 
     /**
@@ -53,6 +56,7 @@ class View
      */
     public function afterRender(Event $event, MvcView $view)
     {
+        parent::afterRender($event, $view);
     }
 
     /**
@@ -63,5 +67,6 @@ class View
      */
     public function notFoundView(Event $event, MvcView $view)
     {
+        parent::notFoundView($event, $view);
     }
 }
