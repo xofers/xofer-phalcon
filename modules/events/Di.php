@@ -11,9 +11,8 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
 
-class Di extends Manager
+class Di
 {
     /**
      * 解决服务之前事件触发

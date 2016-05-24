@@ -11,9 +11,8 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
 
-class Mysql extends Manager
+class Mysql
 {
     /**
      * 当成功连接数据库之后触发

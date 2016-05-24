@@ -10,7 +10,6 @@
 
 namespace Dc\Modules\Services;
 
-
 return [
     'config' => [
         'className' => Config::class,
@@ -28,6 +27,10 @@ return [
                 'value' => array_keys(loadFile(__DIR__ . '/modules.php')->toArray())
             ]
         ]
+    ],
+
+    'dispatcher' => [
+        'className' => Dispatcher::class,
     ],
 
     'dbWrite' => [
@@ -103,6 +106,20 @@ return [
                     'prefix' => '_DCWX_CACHE_'
                 ]
             ]
+        ]
+    ],
+
+    'view' => [
+        'className' => View::class
+    ],
+
+    'debug' => [
+        'className' => Debug::class,
+        'arguments' => [
+            [
+                'type' => 'service',
+                'name' => 'config',
+            ],
         ]
     ],
 

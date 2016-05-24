@@ -10,10 +10,14 @@
 namespace App\Welcome\Controllers;
 
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\View;
 
 class IndexController extends Controller {
 
     public function indexAction() {
-        echo __METHOD__;
+    }
+
+    public function notFoundAction(){
+        $this->view->pick('404');
     }
 }

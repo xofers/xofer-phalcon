@@ -10,6 +10,9 @@
  */
 namespace Dc\Modules\Services;
 
+use Dc\Modules\Events;
+use Phalcon\Events\Manager as EventsManager;
+
 class Router extends \Phalcon\Mvc\Router
 {
 
@@ -17,19 +20,25 @@ class Router extends \Phalcon\Mvc\Router
     {
         parent::__construct($defaultRoutes);
 
-        $this->setDefaultNamespace('App\\Welcome\Controllers');
+        $eventManager = new EventsManager();
+        $eventManager->attach('router', new Events\Router());
+        $this->setEventsManager($eventManager);
+
+        $this->setDefaultNamespace('App\\Welcome\\Controllers');
 
         array_map(function ($module) {
             $this->registerModuleRouter($module);
         }, $modules);
 
+
         $this->removeExtraSlashes(true);
+
     }
 
     /**
      * 注册模块的默认路由
      *
-     * @param string $module
+     * @param $module
      */
     protected function registerModuleRouter($module)
     {
@@ -41,7 +50,7 @@ class Router extends \Phalcon\Mvc\Router
                 'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
             ]
         );
-        $this->add("/{$module}/:controller",
+        $this->add("/{$module}/([\\x00-\\xff]+)",
             [
                 'controller' => 1,
                 'action' => 'index',
@@ -49,10 +58,19 @@ class Router extends \Phalcon\Mvc\Router
                 'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
             ]
         );
-        $this->add("/{$module}/:controller/:action",
+        $this->add("/{$module}/([\\x00-\\xff]+)/([\\x00-\\xff]+)",
             [
                 'controller' => 1,
                 'action' => 2,
+                'module' => $module,
+                'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
+            ]
+        );
+        $this->add("/{$module}/:controller/:action/:params",
+            [
+                'controller' => 1,
+                'action' => 2,
+                'params' => 3,
                 'module' => $module,
                 'namespace' => 'App\\' . ucfirst($module) . '\\Controllers'
             ]

@@ -29,7 +29,7 @@ class Manager
         $services = loadFile(__DIR__ . '/Services.php')->toArray();
 
         array_walk($services, function ($v, $k) {
-            $this->app->di->set($k, $v);
+            $this->app->di->setShared($k, $v);
         });
 
     }
@@ -42,6 +42,7 @@ class Manager
 
         $eventManager->attach('application', new Events\Application());
         $this->app->setEventsManager($eventManager);
+
     }
 
     protected function registerModules()

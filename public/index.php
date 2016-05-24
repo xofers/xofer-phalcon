@@ -13,7 +13,7 @@ try {
 
     $application->setDI(new Phalcon\Di\FactoryDefault());
 
-    $application->useImplicitView(false);
+//    $application->useImplicitView(false);
 
     $modulesManager = new Dc\Modules\Manager($application);
 

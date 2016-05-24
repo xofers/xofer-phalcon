@@ -11,9 +11,8 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
 
-class Application extends Manager
+class Application
 {
     /**
      * 当应用处理它首个请求时触发

@@ -11,4 +11,8 @@ namespace App\Welcome\Services;
 
 return [
 
+    'view' => [
+        'className' => View::class,
+    ]
+
 ];

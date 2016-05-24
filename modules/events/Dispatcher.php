@@ -10,10 +10,11 @@
  */
 namespace Dc\Modules\Events;
 
+use Phalcon\Di as A;
 use Phalcon\Events\Event;
-use Phalcon\Events\Manager;
+use Phalcon\Mvc\Dispatcher as MvcDispatcher;
 
-class Dispatcher extends Manager
+class Dispatcher
 {
     /**
      * 在进入循环调度前触发。此时，调度器不知道将要执行的控制器或者动作是否存在。调度器只知道路由传递过来的信息
@@ -64,8 +65,9 @@ class Dispatcher extends Manager
      * 当控制器中的动作找不到时触发
      *
      * @param Event $event
+     * @param MvcDispatcher $dispatcher
      */
-    public function beforeNotFoundAction(Event $event)
+    public function beforeNotFoundAction(Event $event, MvcDispatcher $dispatcher)
     {
     }
 
@@ -73,10 +75,20 @@ class Dispatcher extends Manager
      * 在调度器抛出任意异常前触发
      *
      * @param Event $event
+     * @param MvcDispatcher $dispatcher
+     *
+     * @return bool
      */
-    public function beforeException(Event $event)
+    public function beforeException(Event $event, MvcDispatcher $dispatcher)
     {
+        $dispatcher->forward([
+            'namespace'=>'App\\Welcome\\Controllers',
+            'module'=>'welcome',
+            'controller' => 'index',
+            'action' => 'notFound'
+        ]);
 
+        return false;
     }
 
     /**

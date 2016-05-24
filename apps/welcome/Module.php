@@ -1,14 +1,9 @@
 <?php
 
-namespace Dc\Welcome;
+namespace App\Welcome;
 
-use Phalcon\Mvc\Router;
 use Phalcon\DiInterface;
-use Phalcon\Loader;
-use Phalcon\Mvc\View;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-use Phalcon\Mvc\Dispatcher;
-use Phalcon\Events\Manager as EventsManager;
 
 class Module implements ModuleDefinitionInterface
 {
@@ -29,6 +24,10 @@ class Module implements ModuleDefinitionInterface
      */
     public function registerServices(DiInterface $di)
     {
+        $services = loadFile(__DIR__ . '/Services.php')->toArray();
 
+        array_walk($services, function ($v, $k) use ($di) {
+            $di->set($k, $v);
+        });
     }
 }
