@@ -77,7 +77,7 @@ abstract class Repository implements RepositoryInterface
     {
         empty($columns) ?: $criteria->columns($columns);
         empty($orderBy) ?: $criteria->orderBy($orderBy);
-        if(!empty($limits)){
+        if (!empty($limits)) {
             list($limit, $offset) = count($limits) == 1 ? [$limits[0], null] : $limits;
             $criteria->limit($limit, $offset);
         }

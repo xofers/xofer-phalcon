@@ -15,6 +15,4 @@ use Dc\Lib\Traits\Singleton;
 trait Base
 {
     use Singleton;
-
-
 }

@@ -9,9 +9,21 @@
  */
 namespace App\Activity\Services;
 
+use Dc\Modules\Services\Repository;
+
 return [
 
     'view' => [
         'className' => View::class,
     ],
+
+    'repository' => [
+        'className' => Repository::class,
+        'arguments' => [
+            [
+                'type' => 'parameter',
+                'value' => 'App\\Activity\\Repositories',
+            ]
+        ]
+    ]
 ];

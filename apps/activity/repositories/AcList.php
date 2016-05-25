@@ -12,11 +12,11 @@ namespace App\Activity\Repositories;
 
 use Dc\Lib\Repositories\Eloquent\Repository;
 use Dc\Lib\Repositories\Criteria\Criteria;
+use Dc\Lib\Traits\Singleton;
 
 class AcList extends Repository
 {
-    use Base;
-
+    use Singleton;
     /**
      * Specify Model class name
      *
@@ -24,7 +24,7 @@ class AcList extends Repository
      */
     protected function model()
     {
-        return 'Dc\Activity\Models\ActivityList';
+        return 'App\Activity\Models\ActivityList';
     }
 
     /**

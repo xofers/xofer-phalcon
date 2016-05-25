@@ -24,6 +24,9 @@ class Manager
         $this->app = $app;
     }
 
+    /**
+     * 注册基础服务
+     */
     protected function registerService()
     {
         $services = loadFile(__DIR__ . '/Services.php')->toArray();
@@ -34,10 +37,9 @@ class Manager
 
     }
 
-    public function getApplication(){
-        return $this->app;
-    }
-
+    /**
+     * 注册DI与Application事件
+     */
     protected function registerEvents()
     {
         $eventManager = new EventsManager();
@@ -49,11 +51,17 @@ class Manager
 
     }
 
+    /**
+     * 注册模块
+     */
     protected function registerModules()
     {
         $this->app->registerModules(loadFile(__DIR__ . '/modules.php')->toArray());
     }
 
+    /**
+     * 模块管理器处理
+     */
     public function handle()
     {
         $this->registerService();
