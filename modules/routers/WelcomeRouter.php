@@ -10,6 +10,9 @@
 
 return [
     'welcome'=>[
-
+        '/404' => [
+            'controller' => 'index',
+            'action' => 'notFound',
+        ]
     ]
 ];

@@ -81,13 +81,7 @@ class Dispatcher
      */
     public function beforeException(Event $event, MvcDispatcher $dispatcher)
     {
-        $dispatcher->forward([
-            'namespace'=>'App\\Welcome\\Controllers',
-            'module'=>'welcome',
-            'controller' => 'index',
-            'action' => 'notFound'
-        ]);
-
+        $dispatcher->getDI()->get('response')->redirect('404');
         return false;
     }
 

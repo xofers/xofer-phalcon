@@ -19,11 +19,10 @@ class View extends \Phalcon\Mvc\View
     {
         parent::__construct($options);
 
-        $this->setViewsDir(APP_PATH."/apps/welcome/views");
+        $this->setViewsDir(__DIR__.'/../views/');
 
         $eventManager = new EventsManager();
         $eventManager->attach('view', new Events\View());
         $this->setEventsManager($eventManager);
-
     }
 }
