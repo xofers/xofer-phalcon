@@ -10,9 +10,7 @@
  */
 namespace Dc\Modules\Events;
 
-use Phalcon\Di as A;
 use Phalcon\Events\Event;
-use Phalcon\Mvc\Dispatcher as MvcDispatcher;
 
 class Dispatcher
 {
@@ -38,18 +36,15 @@ class Dispatcher
      * 在执行控制器/动作方法前触发。此时，调度器已经初始化了控制器并知道动作是否存在
      *
      * @param Event $event
+     * @throws \Exception
+     *
      */
     public function beforeExecuteRoute(Event $event)
     {
-    }
-
-    /**
-     * 允许在请求中全局初始化控制器
-     *
-     * @param Event $event
-     */
-    public function initialize(Event $event)
-    {
+        /**
+         * 控制器自动依赖注入
+         */
+        reflectionMethod($event->getSource()->getActiveController(), $event->getSource()->getActiveMethod(), true);
     }
 
     /**
@@ -59,15 +54,15 @@ class Dispatcher
      */
     public function afterExecuteRoute(Event $event)
     {
+
     }
 
     /**
      * 当控制器中的动作找不到时触发
      *
      * @param Event $event
-     * @param MvcDispatcher $dispatcher
      */
-    public function beforeNotFoundAction(Event $event, MvcDispatcher $dispatcher)
+    public function beforeNotFoundAction(Event $event)
     {
     }
 
@@ -75,13 +70,12 @@ class Dispatcher
      * 在调度器抛出任意异常前触发
      *
      * @param Event $event
-     * @param MvcDispatcher $dispatcher
      *
      * @return bool
      */
-    public function beforeException(Event $event, MvcDispatcher $dispatcher)
+    public function beforeException(Event $event)
     {
-        $dispatcher->getDI()->get('response')->redirect('404');
+        $event->getSource()->getDI()->get('response')->redirect('404');
         return false;
     }
 

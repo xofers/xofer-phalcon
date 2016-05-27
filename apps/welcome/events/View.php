@@ -12,7 +12,7 @@ namespace App\Welcome\Events;
 
 use Phalcon\Events\Event;
 
-class View
+class View extends \Dc\Modules\Events\View
 {
     /**
      * 渲染过程开始前触发(可以停止操作)
@@ -21,6 +21,7 @@ class View
      */
     public function beforeRender(Event $event)
     {
+        parent::beforeRender($event);
     }
 
     /**
@@ -30,6 +31,7 @@ class View
      */
     public function beforeRenderView(Event $event)
     {
+        parent::beforeRenderView($event);
     }
 
     /**
@@ -39,6 +41,7 @@ class View
      */
     public function afterRenderView(Event $event)
     {
+        parent::afterRenderView($event);
     }
 
     /**
@@ -48,6 +51,7 @@ class View
      */
     public function afterRender(Event $event)
     {
+        parent::afterRender($event);
     }
 
     /**
@@ -57,5 +61,6 @@ class View
      */
     public function notFoundView(Event $event)
     {
+        parent::notFoundView($event);
     }
 }

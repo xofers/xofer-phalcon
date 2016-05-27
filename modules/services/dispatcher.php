@@ -10,18 +10,15 @@
  */
 namespace Dc\Modules\Services;
 
-use Dc\Modules\Events;
-use Phalcon\Events\Manager as EventsManager;
+use Dc\Lib\Traits\ServiceEvents;
 
 class Dispatcher extends \Phalcon\Mvc\Dispatcher
 {
-    public function __construct()
-    {
-        parent::__construct();
+    use ServiceEvents;
 
-        $eventManager = new EventsManager();
-        $eventManager->attach('dispatch',new Events\Dispatcher());
-        $this->setEventsManager($eventManager);
-    }
+    /**
+     * @var string
+     */
+    public $attachName = 'dispatch';
 
 }

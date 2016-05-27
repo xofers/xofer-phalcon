@@ -10,21 +10,16 @@
  */
 namespace Dc\Modules\Services;
 
+use Doctrine\Common\Cache\PredisCache;
 use Predis\Client;
-use Predis\Session\Handler;
 
-class Cache extends Client
+class Cache extends PredisCache
 {
     public function __construct(Config $config, $options)
     {
         $options['prefix'] .= MODULE_NAME . '_';
 
-        parent::__construct(array_values($config->redis->toArray()), $options);
-
-        $handler = new Handler($this, ['gc_maxlifetime' => 86400]);
-
-        $handler->register();
+        parent::__construct(new Client(array_values($config->redis->toArray()), $options));
 
     }
-
 }

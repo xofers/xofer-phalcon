@@ -11,18 +11,20 @@
 namespace Dc\Modules\Services;
 
 use Dc\Modules\Events;
-use Phalcon\Events\Manager as EventsManager;
+use Dc\Lib\Traits\ServiceEvents;
 
-class Router extends \Phalcon\Mvc\Router
+final class Router extends \Phalcon\Mvc\Router
 {
+    use ServiceEvents;
+
+    /**
+     * @var string
+     */
+    public $attachName = 'router';
 
     public function __construct($defaultRoutes = true)
     {
         parent::__construct($defaultRoutes);
-
-        $eventManager = new EventsManager();
-        $eventManager->attach('router', new Events\Router());
-        $this->setEventsManager($eventManager);
 
         $this->setDefaultNamespace('App\\Welcome\\Controllers');
 

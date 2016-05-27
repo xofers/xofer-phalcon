@@ -14,9 +14,6 @@ use Phalcon\Mvc\View;
 
 class IndexController extends Controller {
 
-    public function indexAction() {
-    }
-
     public function notFoundAction(){
         $this->view->pick('404');
     }

@@ -11,7 +11,6 @@
 namespace App\Activity\Events;
 
 use Phalcon\Events\Event;
-use Phalcon\Mvc\View as MvcView;
 
 class View extends \Dc\Modules\Events\View
 {
@@ -19,54 +18,49 @@ class View extends \Dc\Modules\Events\View
      * 渲染过程开始前触发(可以停止操作)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function beforeRender(Event $event, MvcView $view)
+    public function beforeRender(Event $event)
     {
-        parent::beforeRender($event, $view);
+        parent::beforeRender($event);
     }
 
     /**
      * 渲染一个现有的视图之前触发(可以停止操作)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function beforeRenderView(Event $event, MvcView $view)
+    public function beforeRenderView(Event $event)
     {
-        parent::beforeRenderView($event, $view);
+        parent::beforeRenderView($event);
     }
 
     /**
      * 渲染一个现有的视图之后触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function afterRenderView(Event $event, MvcView $view)
+    public function afterRenderView(Event $event)
     {
-        parent::afterRenderView($event, $view);
+        parent::afterRenderView($event);
     }
 
     /**
      * 渲染过程完成后触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function afterRender(Event $event, MvcView $view)
+    public function afterRender(Event $event)
     {
-        parent::afterRender($event, $view);
+        parent::afterRender($event);
     }
 
     /**
      * 视图不存在时触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function notFoundView(Event $event, MvcView $view)
+    public function notFoundView(Event $event)
     {
-        parent::notFoundView($event, $view);
+        parent::notFoundView($event);
     }
 }

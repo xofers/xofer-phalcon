@@ -10,17 +10,14 @@
  */
 namespace Dc\Modules\Services;
 
-use Dc\Modules\Events;
-use Phalcon\Events\Manager as EventsManager;
+use Dc\Lib\Traits\ServiceEvents;
 
 class View extends \Phalcon\Mvc\View
 {
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
+    use ServiceEvents;
 
-        $eventManager = new EventsManager();
-        $eventManager->attach('view', new Events\View());
-        $this->setEventsManager($eventManager);
-    }
+    /**
+     * @var string
+     */
+    public $attachName = 'view';
 }

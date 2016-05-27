@@ -9,20 +9,19 @@
  */
 namespace App\Activity\Services;
 
-use Dc\Modules\Services\Repository;
+use App\Activity\Events;
 
 return [
 
     'view' => [
         'className' => View::class,
-    ],
-
-    'repository' => [
-        'className' => Repository::class,
-        'arguments' => [
+        'properties' => [
             [
-                'type' => 'parameter',
-                'value' => 'App\\Activity\\Repositories',
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\View::class
+                ]
             ]
         ]
     ]

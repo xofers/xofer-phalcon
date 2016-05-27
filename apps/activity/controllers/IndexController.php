@@ -9,12 +9,12 @@
 
 namespace App\Activity\Controllers;
 
+use App\Activity\Repositories\AcList;
 use Phalcon\Mvc\Controller;
 
 class IndexController extends Controller
 {
-    public function showAction()
+    public function showAction(AcList $acList)
     {
-
     }
 }
