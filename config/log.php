@@ -15,8 +15,6 @@ return  [
 
         'level' =>  \Monolog\Logger::ERROR,
 
-        'file'  =>  $_SERVER['DC_WX_DIR_LOG'].'/'.MODULE_NAME.'/'.date('Ym').'/'.date('Ymd').'-TYPE'.'.log',
-
-    ],
-
+        'file'  =>  APP_PATH.'/.storage/'.MODULE_NAME.'/'.date('Ym').'/'.date('Ymd').'-TYPE'.'.log',
+    ]
 ];

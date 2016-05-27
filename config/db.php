@@ -14,15 +14,15 @@ return [
 
         'adapter'   => 'Mysql',
 
-        'host'      => $_SERVER['DC_MYSQL_MASTER_HOST'],
+        'host'      => '',
 
-        'username'  => $_SERVER['DC_MYSQL_MASTER_USER'],
+        'username'  => '',
 
-        'password'  => $_SERVER['DC_MYSQL_MASTER_PWD'],
+        'password'  => '',
 
-        'dbname'    => $_SERVER['DC_MYSQL_MASTER_DB'],
+        'dbname'    => '',
 
-        'port'      => $_SERVER['DC_MYSQL_MASTER_PORT'],
+        'port'      => '',
 
         'charset'   => 'utf8',
 
@@ -32,15 +32,15 @@ return [
 
         'adapter'   => 'Mysql',
 
-        'host'      => $_SERVER['DC_MYSQL_SLAVE_HOST'],
+        'host'      => '',
 
-        'username'  => $_SERVER['DC_MYSQL_SLAVE_USER'],
+        'username'  => '',
 
-        'password'  => $_SERVER['DC_MYSQL_SLAVE_PWD'],
+        'password'  => '',
 
-        'dbname'    => $_SERVER['DC_MYSQL_SLAVE_DB'],
+        'dbname'    => '',
 
-        'port'      => $_SERVER['DC_MYSQL_SLAVE_PORT'],
+        'port'      => '',
 
         'charset'   => 'utf8',
 

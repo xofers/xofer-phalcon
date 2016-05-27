@@ -15,7 +15,7 @@ return [
 
             'schame' => 'tcp',
 
-            'host' => '122.144.133.170',
+            'host' => '',
 
             'port' => 6379,
 
@@ -27,7 +27,7 @@ return [
 
             'schame' => 'tcp',
 
-            'host' => '122.144.133.170',
+            'host' => '',
 
             'port' => 6379,
 

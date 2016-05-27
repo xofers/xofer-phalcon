@@ -11,25 +11,25 @@
 
 return [
 
-    'mail'=>[
+    'mail' => [
 
-        'driver'        =>  'smtp',
+        'driver' => 'smtp',
 
-        'host'          =>  'smtp.exmail.qq.com',
+        'host' => 'smtp.exmail.qq.com',
 
-        'port'          =>  465,
+        'port' => 465,
 
-        'encryption'    =>  'ssl',
+        'encryption' => 'ssl',
 
-        'userName'      =>  'dev@duocai.cn',
+        'userName' => '',
 
-        'passWord'      =>  'Duocai2015',
+        'passWord' => '',
 
-        'from'          =>  [
+        'from' => [
 
-            'email'     =>      'dev@duocai.cn',
+            'email' => '',
 
-            'name'      =>      APP_NAME . ' - 技术研发中心'
+            'name' => ''
 
         ]
     ]

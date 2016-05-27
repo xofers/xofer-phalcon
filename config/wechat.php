@@ -23,10 +23,10 @@ return  [
         /**
          * 账号基本信息，请从微信公众平台/开放平台获取
          */
-        'app_id'  => 'wx778a1b200d45838b',                                  // AppID
-        'secret'  => 'e74cccd8bb1df70cabfa67c35a9b0654',                    // AppSecret
-        'token'   => '7mjioFsM1q',                                          // Token
-        'aes_key' => 'I5RhzYaHLQDgZpzNaQTR1Wu9vSP4eGjlbFZp9hCdqYC',         // EncodingAESKey
+        'app_id'  => '',         // AppID
+        'secret'  => '',         // AppSecret
+        'token'   => '',         // Token
+        'aes_key' => '',         // EncodingAESKey
 
         /**
          * 日志配置
@@ -37,7 +37,7 @@ return  [
          */
         'log' => [
             'level' => 'error',
-            'file'  => !isset($_SERVER['DC_WX_DIR_LOG'])?:$_SERVER['DC_WX_DIR_LOG'].'/wechat/'.date('Ym').'/'.date('Ymd').'.log',
+            'file'  => ''
         ],
 
         /**
@@ -55,10 +55,10 @@ return  [
          * 微信支付
          */
         'payment' => [
-            'merchant_id'        => '1226449602',
-            'key'                => 'EgTHxJhoJHPLrpkWrttZPWTnhaulIDze',
-            'cert_path'          => APP_PATH.'/library/pem/cert.pem',
-            'key_path'           => APP_PATH.'/library/pem/key.pem',
+            'merchant_id'        => '',
+            'key'                => '',
+            'cert_path'          => '',
+            'key_path'           => '',
             // 'device_info'     => '013467007045764',
             // 'sub_app_id'      => '',
             // 'sub_merchant_id' => '',

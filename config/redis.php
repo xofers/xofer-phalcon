@@ -15,7 +15,7 @@ return [
 
             'schame' => 'tcp',
 
-            'host' => $_SERVER['DC_REDIS_MASTER_HOST'],
+            'host' => '',
 
             'port' => 6379,
 
@@ -27,7 +27,7 @@ return [
 
             'schame' => 'tcp',
 
-            'host' => $_SERVER['DC_REDIS_SLAVE_HOST'],
+            'host' => '',
 
             'port' => 6379,
 

@@ -21,15 +21,15 @@ return [
 
         'encryption'    =>  'ssl',
 
-        'userName'      =>  'dev@duocai.cn',
+        'userName'      =>  '',
 
-        'passWord'      =>  'Duocai2015',
+        'passWord'      =>  '',
 
         'from'          =>  [
 
-            'email'     =>      'dev@duocai.cn',
+            'email'     =>      '',
 
-            'name'      =>      APP_NAME . ' - 技术研发中心'
+            'name'      =>      ''
 
         ]
     ]

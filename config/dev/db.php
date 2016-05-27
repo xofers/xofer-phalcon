@@ -10,40 +10,39 @@
  */
 
 return  [
+    'db_w' => [
 
-    'db_w'    =>  [
+        'adapter' => 'Mysql',
 
-        'adapter'   => 'Mysql',
+        'host' => '192.168.110.110',
 
-        'host'      => '122.144.133.170',
+        'username' => 'root',
 
-        'username'  => 'duocai_dev',
+        'password' => 'root',
 
-        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
+        'dbname' => 'duocaiwx',
 
-        'dbname'    => 'duocaiwx',
+        'port' => '3306',
 
-        'port'      => '3306',
-
-        'charset'   => 'utf8'
+        'charset' => 'utf8',
 
     ],
 
-    'db_r'  =>  [
+    'db_r' => [
 
-        'adapter'   => 'Mysql',
+        'adapter' => 'Mysql',
 
-        'host'      => '122.144.133.170',
+        'host' => '192.168.110.110',
 
-        'username'  => 'duocai_dev',
+        'username' => 'root',
 
-        'password'  => 'duocaiOIusg8712T82iHSNha7t1',
+        'password' => 'root',
 
-        'dbname'    => 'duocaiwx',
+        'dbname' => 'duocaiwx',
 
-        'port'      => '3306',
+        'port' => '3306',
 
-        'charset'   => 'utf8'
+        'charset' => 'utf8',
 
     ]
 ];
