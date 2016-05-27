@@ -10,6 +10,8 @@
 
 namespace Dc\Modules\Services;
 
+use Dc\Modules\Events;
+
 return [
     'config' => [
         'className' => Config::class,
@@ -17,16 +19,28 @@ return [
 
     'router' => [
         'className' => Router::class,
-        'arguments' => [
+        'properties' => [
             [
-                'type' => 'parameter',
-                'value' => true
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\Router::class
+                ]
             ]
         ]
     ],
 
     'dispatcher' => [
         'className' => Dispatcher::class,
+        'properties' => [
+            [
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\Dispatcher::class
+                ]
+            ]
+        ]
     ],
 
     'dbWrite' => [
@@ -39,6 +53,15 @@ return [
             [
                 'type' => 'service',
                 'name' => 'config',
+            ]
+        ],
+        'properties' => [
+            [
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\Mysql::class
+                ]
             ]
         ]
     ],
@@ -53,6 +76,15 @@ return [
             [
                 'type' => 'service',
                 'name' => 'config',
+            ]
+        ],
+        'properties' => [
+            [
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\Mysql::class
+                ]
             ]
         ]
     ],
@@ -106,7 +138,16 @@ return [
     ],
 
     'view' => [
-        'className' => View::class
+        'className' => View::class,
+        'properties' => [
+            [
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\View::class
+                ]
+            ]
+        ]
     ],
 
     'debug' => [

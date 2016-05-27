@@ -11,7 +11,6 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
-use Phalcon\Mvc\View as MvcView;
 
 class View
 {
@@ -19,19 +18,19 @@ class View
      * 渲染过程开始前触发(可以停止操作)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function beforeRender(Event $event, MvcView $view)
+    public function beforeRender(Event $event)
     {
+        echo 'dddd';
+        die();
     }
 
     /**
      * 渲染一个现有的视图之前触发(可以停止操作)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function beforeRenderView(Event $event, MvcView $view)
+    public function beforeRenderView(Event $event)
     {
     }
 
@@ -39,9 +38,8 @@ class View
      * 渲染一个现有的视图之后触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function afterRenderView(Event $event, MvcView $view)
+    public function afterRenderView(Event $event)
     {
     }
 
@@ -49,9 +47,8 @@ class View
      * 渲染过程完成后触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function afterRender(Event $event, MvcView $view)
+    public function afterRender(Event $event)
     {
     }
 
@@ -59,9 +56,8 @@ class View
      * 视图不存在时触发(不可停止)
      *
      * @param Event $event
-     * @param MvcView $view
      */
-    public function notFoundView(Event $event, MvcView $view)
+    public function notFoundView(Event $event)
     {
     }
 }

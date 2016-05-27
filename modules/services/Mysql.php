@@ -11,17 +11,20 @@
 namespace Dc\Modules\Services;
 
 use Dc\Modules\Events;
-use Phalcon\Events\Manager as EventsManager;
+use Dc\Lib\Traits\ServiceEvents;
 use Phalcon\Db\Adapter\Pdo\Mysql as MysqlAdapter;
 
 class Mysql extends MysqlAdapter
 {
+    use ServiceEvents;
+
+    /**
+     * @var string
+     */
+    public $attachName = 'db';
+
     public function __construct(array $descriptor = null, $config = null)
     {
         parent::__construct($config->{current($descriptor)}->toArray());
-
-        $eventManager = new EventsManager();
-        $eventManager->attach('db', new Events\Mysql());
-        $this->setEventsManager($eventManager);
     }
 }

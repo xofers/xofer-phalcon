@@ -9,10 +9,21 @@
  */
 namespace App\Welcome\Services;
 
+use App\Welcome\Events;
+
 return [
 
     'view' => [
         'className' => View::class,
+        'properties' => [
+            [
+                'name' => '_event',
+                'value' => [
+                    'type' => 'instance',
+                    'className' => Events\View::class
+                ]
+            ]
+        ]
     ]
 
 ];

@@ -24,7 +24,6 @@ class Mysql
      */
     public function afterConnect(Event $event, DbMysql $mysql)
     {
-
     }
 
     /**

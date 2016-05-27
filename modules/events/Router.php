@@ -11,18 +11,16 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
-
 use Dc\Modules\Services\Router as MvcRouter;
 
-class Router
+final class Router
 {
     /**
      * 检查所有路由之前触发
      *
      * @param Event $event
-     * @param MvcRouter $router
      */
-    public function beforeCheckRoutes(Event $event, MvcRouter $router)
+    public function beforeCheckRoutes(Event $event)
     {
     }
 
@@ -30,9 +28,8 @@ class Router
      * 检查单个路由之前触发
      *
      * @param Event $event
-     * @param MvcRouter $router
      */
-    public function beforeCheckRoute(Event $event, MvcRouter $router)
+    public function beforeCheckRoute(Event $event)
     {
     }
 
@@ -40,31 +37,26 @@ class Router
      * 匹配路由之后触发
      *
      * @param Event $event
-     * @param MvcRouter $router
      */
-    public function matchedRoute(Event $event, MvcRouter $router)
+    public function matchedRoute(Event $event)
     {
-
     }
 
     /**
      * 未匹配路由之后触发
      *
      * @param Event $event
-     * @param MvcRouter $router
      */
-    public function notMatchedRoute(Event $event, MvcRouter $router)
+    public function notMatchedRoute(Event $event)
     {
-
     }
 
     /**
      * 检查所有路由之后触发
      *
      * @param Event $event
-     * @param MvcRouter $router
      */
-    public function afterCheckRoutes(Event $event, MvcRouter $router)
+    public function afterCheckRoutes(Event $event)
     {
     }
 }

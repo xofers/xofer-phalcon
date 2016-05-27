@@ -116,6 +116,46 @@ if (!function_exists('class_basename')) {
     }
 }
 
+if (!function_exists('reflectionMethod')) {
+    /**
+     *
+     *
+     * @param  object $class
+     * @param  string $method
+     * @param  bool $isService
+     * @return mixed
+     */
+    function reflectionMethod($class, $method, $isService = false)
+    {
+        $reflectionMethod = new \ReflectionMethod($class, $method);
+
+        $parameters = [];
+        foreach ($reflectionMethod->getParameters() as $parameter) {
+            if ($parameter->isOptional()) {
+                $parameters[] = $parameter->getDefaultValue();
+                continue;
+            }
+
+            $paramClass = $parameter->getClass();
+            if ($paramClass != null && $paramClass->isInstantiable()) {
+                if (!$isService) {
+                    $di = \Phalcon\Di::getDefault();
+                    if (!$di->has($paramClass->name)) {
+                        $di->setShared($paramClass->name, $paramClass->name);
+                    }
+
+                    $parameters[] = $di->getShared($paramClass->name);
+                    continue;
+                }
+
+                $parameters[] = new $paramClass->name();
+            }
+        }
+
+        $reflectionMethod->invokeArgs($class, $parameters);
+    }
+}
+
 if (!function_exists('trait_uses_recursive')) {
     /**
      * Returns all traits used by a trait and its traits.

@@ -11,6 +11,7 @@
 namespace Dc\Modules\Events;
 
 use Phalcon\Events\Event;
+use Phalcon\Events\Manager;
 
 class Di
 {
@@ -21,6 +22,7 @@ class Di
      */
     public function beforeServiceResolve(Event $event)
     {
+
     }
 
     /**
@@ -30,5 +32,15 @@ class Di
      */
     public function afterServiceResolve(Event $event)
     {
+        /**
+         * 绑定各个服务的事件
+         */
+        $service = $event->getData()['instance'];
+
+        if (property_exists($service, 'attachName')) {
+            $eventManager = empty($eventManager) ? new Manager() : $service->getEventsManager();
+            $eventManager->attach($service->attachName, $service->getEvent());
+            $service->setEventsManager($eventManager);
+        }
     }
 }
